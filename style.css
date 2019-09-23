@@ -16,3 +16,74 @@ body {
   width: 300px;
   box-shadow: -2px 0 15px 5px rgba(10, 10, 10, 0.8);
 }
+
+#canvas {
+
+}
+
+#child {
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  height: 200px;
+  width: 200px;
+  border-radius: 100px;
+  background-color: orange;
+  position: absolute;
+}
+
+/* Kirby animations*/
+@keyframes xAxis1 {
+  0% { left: 50% }
+  50% { left: 10% }
+  100% { left: 50% }
+}
+
+@keyframes yAxis1 {
+  0% { top: 50% }
+  25% { top: -20vh }
+  50% { top: 50% }
+  75% { top: 45vh }
+  100% { top: 50% }
+}
+
+@keyframes xAxis2 {
+  0% { left: 50% }
+  50% { left: 90% }
+  100% { left: 50% }
+}
+
+@keyframes yAxis2 {
+  0% { top: 50% }
+  25% { top: -20vh }
+  50% { top: 50% }
+  75% { top: 45vh }
+  100% { top: 50% }
+}
+
+@keyframes xAxis3 {
+  0% { left: 50% }
+  25% { left: 10% }
+  75% { left: 90% }
+  100% { left: 50% }
+}
+
+@keyframes yAxis3 {
+  0% { top: 50% }
+  50% { top: -20vh }
+  100% { top: 50% }
+}
+
+@keyframes xAxis4 {
+  0% { left: 50% }
+  25% { left: 10% }
+  75% { left: 90% }
+  100% { left: 50% }
+}
+
+@keyframes yAxis4 {
+  0% { top: 50% }
+  50% { top: 45vh }
+  100% { top: 50% }
+}
+/* Kirby animations END*/
