@@ -17,7 +17,24 @@
     </div>
     
     <section class="main-container">
-            <img src="./images/kirby.jpg" width="50px" id="bigCanvas" onclick="cookieClick()"/>
+            <div>
+                    <div id="bigCanvas" style="position: relative; width:200px; height: 200px;"  onclick="cookieClick()">
+                        <!-- side was 300x300 -->
+                        <canvas
+                            style="border-radius: 400px; position: absolute; left: 50%; transform: translate(-50%); z-index: 3"
+                            id="myCanvas1" width="200" height="200"></canvas>
+                        <canvas style=" position: absolute; left: -20%; top: 20%; z-index: 2;" id="myCanvas2"
+                            width="80" height="80"></canvas> <!-- left hand -->
+                        <canvas style=" position: absolute; left: 85%; top: 20%; z-index: 2;" id="myCanvas3"
+                            width="80" height="80"></canvas>
+                        <!--right hand  70*80 -->
+                        <canvas style=" position: absolute; left: 5%; top: 70%; z-index: 2;" id="myCanvas4"
+                            width="80" height="80"></canvas> <!-- left foot -->
+                        <canvas style=" position: absolute; left: 55%; top: 70%; z-index: 2;" id="myCanvas5"
+                            width="80" height="80"></canvas> <!-- right foot -->
+                    </div>
+                </div>
+
         <div id="numbers">0</div>
 
         <div class="kirby-life">
