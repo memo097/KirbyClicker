@@ -1,6 +1,5 @@
 var timer = 10;
-var bonus = document.getElementById('chrono')
-
+var bonus = document.getElementById('chrono');
 bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
 if(score < 5000 ){
     bonus.disabled = true
@@ -11,6 +10,7 @@ console.log(score, 1)
 bonus.addEventListener("click", function(){
     bonus.disabled = true
     score = score - 5000
+    multiplier = multiplier*2
 var countdown = setInterval(function(){
     timer -- 
     bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
@@ -24,6 +24,7 @@ var countdown = setInterval(function(){
         }
         timer=10
         bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
+        multiplier = multiplier/2
     }
 }, 1000);
 
