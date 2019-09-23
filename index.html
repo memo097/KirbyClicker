@@ -10,13 +10,20 @@
 </head>
 
 <body>
+    <img class="game-over" src="images/game-over.jpg" alt="game over">
+    <div class="gif-retry">
+    <img src="images/game-over.gif" alt="gif game over">
+    <button onclick="tryAgain()">Try-Again</button>
+    </div>
+    
     <section class="main-container">
-        <div id="cookie" onclick="cookieClick()">
-            <img src="./images/kirby.jpg" width="50px" />
-        </div>
+            <img src="./images/kirby.jpg" width="50px" id="bigCanvas" onclick="cookieClick()"/>
         <div id="numbers">0</div>
-        <div id="levelup"></div>
 
+        <div class="kirby-life">
+        <img class="hearth" src="images/hearth.gif_c200" alt="gif d'un coeur qui tourne">
+        <p class="game-life"></p>
+        </div>
     </section>
     <section class="bonus-container">
         <section class="chrono">

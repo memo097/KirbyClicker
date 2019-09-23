@@ -17,8 +17,6 @@ body {
   box-shadow: -2px 0 15px 5px rgba(10, 10, 10, 0.8);
 }
 
-
-
 #numbers {
   margin: auto;
   text-align:center;
@@ -32,3 +30,51 @@ body {
   height:60px;    
 }
 
+/* MEHMET */
+.main-container button {
+  position: absolute;
+}
+.kirby-life {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+}
+.hearth {
+  width: 40px;
+}
+.game-over {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  bottom: 100%;
+  z-index: 5;
+}
+@keyframes gameOver{
+  0% {bottom:100%}
+  100% {bottom:0}
+}
+.gif-retry {
+  position: absolute;
+  z-index: 5;
+  bottom: 100%;
+  left: 46%;
+  display: flex;
+  width: 223px;
+}
+
+.gif-retry img {
+  height: 150px;
+  width: 150px;
+}
+@keyframes gifRetry{
+  0% {bottom:100%}
+  100% {bottom:50px}
+}
+
+@keyframes buttonRetry{
+  0% {opacity: 0}
+  100% {opacity: 0}
+}
+.gif-retry button{
+  opacity: 1;
+}
