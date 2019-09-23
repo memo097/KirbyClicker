@@ -2,45 +2,51 @@ var timer = 30;
 var score = 0;
 var numbers = document.getElementById("numbers");
 var cookie = document.getElementById("bigCanvas");
-var multiplier = 1;
-
-function cookieClick() {
-    console.log(score)
-   score = score + (1*multiplier);
-   
-numbers.textContent = score ;
-}
-function fire () {
-    
-    multiplier = 2; 
-}
-function water () {
-   
-    multiplier = 10;
-}
-function frost () {
-   
-    multiplier = 20;
-}
-function rainbow () {
-   
-    multiplier = 100;
-
-}
-
+const canvasContainer = document.getElementById('canvas-container')
 var life = 10;
-
 var bonus = document.getElementById('chrono')
 bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
-if(score < 5000 ){
-    bonus.disabled = true
-}else if (score >= 5000){
-    bonus.disabled = false
+var multiplier = 1;
+const main = document.querySelector(".main-container")
+
+if (score < 5000 ) bonus.disabled = true
+else bonus.disabled = false
+
+const motion = () => {
+    const animations = [1, 2, 3, 4]
+    setInterval(() => {
+        let animation = animations[Math.round(Math.random()*3)]
+        canvasContainer.style.animation = `xAxis${animation} 4000ms linear`
+        cookie.style.animation = `yAxis${animation} 4000ms ease-in-out`
+    }, 4000)
+}
+motion()
+
+function fire () {
+    multiplier = 2;
+    main.style.backgroundImage = 'url("images/background-fire.jpg")'
+    cookie.style.boxShadow = '0 0 100px 50px rgb(230, 30, 40)'
+}
+function water () {
+    multiplier = 10;
+    main.style.backgroundImage = 'url("images/background-water.jpg")'
+    cookie.style.boxShadow = '0 0 100px 50px rgb(80, 50, 160)'
+}
+function frost () {
+    multiplier = 20;
+    main.style.backgroundImage = 'url("images/background-ice.jpg")'
+    cookie.style.boxShadow = '0 0 100px 50px rgb(100, 250, 230)'
+}
+function rainbow () {
+    multiplier = 100;
+    main.style.backgroundImage = 'url("images/background-final.gif")'
+    cookie.style.boxShadow = '0 0 100px 50px rgb(200, 70, 200)'
 }
 console.log(score, 1)
 bonus.addEventListener("click", function(){
     bonus.disabled = true
     score = score - 5000
+    numbers.textContent = score
     multiplier = multiplier*2
 var countdown = setInterval(function(){
     timer -- 
@@ -48,11 +54,8 @@ var countdown = setInterval(function(){
     if(timer == 0){
         bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
         clearInterval(countdown)
-        if(score < 5000 ){
-            bonus.disabled = true
-        }else if (score >= 5000){
-            bonus.disabled = false
-        }
+        if (score < 5000 ) bonus.disabled = true
+        else bonus.disabled = false
         timer=10
         bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
         multiplier = multiplier/2
@@ -60,23 +63,25 @@ var countdown = setInterval(function(){
 }, 1000);
 });
 
-document.querySelector(".main-container").onclick=(e)=>gameover(e)
-document.querySelector(".game-life").innerHTML = life
+main.onclick=(e)=>gameover(e)
+document.querySelector(".game-life").innerHTML = `x${life}`
 function gameover(e){
-    if((!e.path[0].id.includes("bigCanvas")) || (!e.path[0].id.includes("myCanvas"))){
+    if(!e.path[0].id.includes('myCanvas')){
         life--
-        console.log(e.path[0].id);
         if(life==0){
-            document.querySelector(".game-over").style.animation="gameOver 1s ease-in forwards"
-            document.querySelector(".gif-retry").style.animation="gifRetry 4s ease-in forwards 1s"
-            document.querySelector(".gif-retry button").style.animation="buttonRetry 4s ease-in 1s"
+            document.querySelector(".game-over").style.animation="gameOver 700ms ease-in-out forwards"
+            document.querySelector(".gif-retry").style.animation="gifRetry 3s ease-in forwards 700ms"
+            document.querySelector(".gif-retry button").style.animation="buttonRetry 3s ease-in 700ms"
             document.querySelector(".main-container").onclick=(e)=false
 
         }
     }else{
-        console.log(life)
+        score = score + (1*multiplier);
+        numbers.textContent = score ;
+        if (score < 5000 ) bonus.disabled = true
+        else bonus.disabled = false
     }
-    document.querySelector(".game-life").innerHTML = life
+    document.querySelector(".game-life").innerHTML = `x${life}`
 }
 function tryAgain(){
     document.location.reload()

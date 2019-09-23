@@ -13,12 +13,12 @@
     <img class="game-over" src="images/game-over.jpg" alt="game over">
     <div class="gif-retry">
     <img src="images/game-over.gif" alt="gif game over">
-    <button onclick="tryAgain()">Try-Again</button>
+    <button onclick="tryAgain()">Play Again</button>
     </div>
     
     <section class="main-container">
-            <div>
-                    <div id="bigCanvas" style="position: relative; width:200px; height: 200px;"  onclick="cookieClick()">
+            <div id="canvas-container">
+                    <div id="bigCanvas">
                         <!-- side was 300x300 -->
                         <canvas
                             style="border-radius: 400px; position: absolute; left: 50%; transform: translate(-50%); z-index: 3"
@@ -35,13 +35,14 @@
                     </div>
                 </div>
 
-        <div id="numbers">0</div>
+                <div class="score"><p id="numbers">0</p><img src="images/star.png" alt="star"></div>
 
-        <div class="kirby-life">
-        <img class="hearth" src="images/hearth.gif_c200" alt="gif d'un coeur qui tourne">
-        <p class="game-life"></p>
-        </div>
+                <div class="kirby-life">
+                <img class="hearth" src="images/hearth.gif_c200" alt="gif d'un coeur qui tourne">
+                <p class="game-life"></p>
+                </div>
     </section>
+
     <section class="bonus-container">
         <section class="chrono">
             <button id="chrono"></button>
@@ -80,7 +81,6 @@
                 </ul>
             </section>
         </section>
-    </section>
 
 
     <script src='script.js'></script>
