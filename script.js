@@ -1,5 +1,6 @@
 var life = 10;
 var timer = 10;
+var score = 0;
 var bonus = document.getElementById('chrono')
 bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
 if(score < 5000 ){
@@ -47,4 +48,7 @@ function gameover(e){
         console.log(life)
     }
     document.querySelector(".game-life").innerHTML = life
+}
+function tryAgain(){
+    document.location.reload()
 }
