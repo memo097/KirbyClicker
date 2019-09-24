@@ -9,7 +9,7 @@ var bonus = document.getElementById('chrono')
 bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
 var multiplier = 1;
 const main = document.querySelector(".main-container")
-
+var counter =0
 if (score < 5000 ) bonus.disabled = true
 else bonus.disabled = false
 
@@ -92,13 +92,23 @@ function gameover(e){
         numbers.textContent = score ;
         if (score < 5000 ) bonus.disabled = true
         else bonus.disabled = false
+        counter++
+        document.querySelector("#bigCanvas").innerHTML = document.querySelector("#bigCanvas").innerHTML + `<img class = "star" id="${counter}" src="images/star.png"></img>`
+    
+             setTimeout(function (){
+                var random = Math.round(Math.random())
+                document.getElementById(`${counter}`).style.animation= `${(random%2===0?'falling': 'falling2')} 0.2s ease-in-out`;
+                console.log(Math.round(random)%2 === 0)
+           
+        }, 500)
+        canvas()
     }
     document.querySelector(".game-life").innerHTML = `x${life}`
 }
 function tryAgain(){
     document.location.reload()
 }
-
+function canvas (){
  // Canvas Kirby
  var c1 = document.getElementById("myCanvas1");
  var ctx = c1.getContext("2d");
@@ -224,4 +234,5 @@ function tryAgain(){
  ctx5.fill();
 
  //CANVAS END
- 
+}
+canvas()
