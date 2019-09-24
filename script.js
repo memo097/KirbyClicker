@@ -1,3 +1,5 @@
+var clictime = 10;
+var actif = false
 var timer = 30;
 var score = 0;
 var numbers = document.getElementById("numbers");
@@ -42,9 +44,21 @@ function rainbow () {
     main.style.backgroundImage = 'url("images/background-final.gif")'
     cookie.style.boxShadow = '0 0 100px 50px rgb(200, 70, 200)'
 }
+function autoclicker(){
+var durerclick = setInterval(function(){
+    document.getElementsByClassName("autoclick")
+    myCanvas1.click()
+    clictime--
+    if(clictime==0){
+    clearInterval(durerclick)
+    clictime=10
+    }
+},1000)
+}
 console.log(score, 1)
 bonus.addEventListener("click", function(){
     bonus.disabled = true
+    actif = true
     score = score - 5000
     numbers.textContent = score
     multiplier = multiplier*2
@@ -56,7 +70,8 @@ var countdown = setInterval(function(){
         clearInterval(countdown)
         if (score < 5000 ) bonus.disabled = true
         else bonus.disabled = false
-        timer=10
+        timer=30
+        actif = false
         bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
         multiplier = multiplier/2
     }
@@ -78,7 +93,7 @@ function gameover(e){
     }else{
         score = score + (1*multiplier);
         numbers.textContent = score ;
-        if (score < 5000 ) bonus.disabled = true
+        if (score < 5000 || actif) bonus.disabled = true
         else bonus.disabled = false
 
         if(score>=10) document.getElementById("buyLifeButton").disabled = false;
