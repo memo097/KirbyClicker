@@ -12,35 +12,37 @@
 <body>
     <img class="game-over" src="images/game-over.jpg" alt="game over">
     <div class="gif-retry">
-    <img src="images/game-over.gif" alt="gif game over">
-    <button onclick="tryAgain()">Play Again</button>
+        <img src="images/game-over.gif" alt="gif game over">
+        <button onclick="tryAgain()">Play Again</button>
     </div>
-    
+
     <section class="main-container">
-            <div id="canvas-container">
-                    <div id="bigCanvas">
-                        <!-- side was 300x300 -->
-                        <canvas
-                            style="border-radius: 400px; position: absolute; left: 50%; transform: translate(-50%); z-index: 3"
-                            id="myCanvas1" width="200" height="200"></canvas>
-                        <canvas style=" position: absolute; left: -20%; top: 20%; z-index: 2;" id="myCanvas2"
-                            width="80" height="80"></canvas> <!-- left hand -->
-                        <canvas style=" position: absolute; left: 85%; top: 20%; z-index: 2;" id="myCanvas3"
-                            width="80" height="80"></canvas>
-                        <!--right hand  70*80 -->
-                        <canvas style=" position: absolute; left: 5%; top: 70%; z-index: 2;" id="myCanvas4"
-                            width="80" height="80"></canvas> <!-- left foot -->
-                        <canvas style=" position: absolute; left: 55%; top: 70%; z-index: 2;" id="myCanvas5"
-                            width="80" height="80"></canvas> <!-- right foot -->
-                    </div>
-                </div>
+        <div id="canvas-container">
+            <div id="bigCanvas">
+                <!-- side was 300x300 -->
+                <canvas
+                    style="border-radius: 400px; position: absolute; left: 50%; transform: translate(-50%); z-index: 3"
+                    id="myCanvas1" width="200" height="200"></canvas>
+                <canvas style=" position: absolute; left: -20%; top: 20%; z-index: 2;" id="myCanvas2" width="80"
+                    height="80"></canvas> <!-- left hand -->
+                <canvas style=" position: absolute; left: 85%; top: 20%; z-index: 2;" id="myCanvas3" width="80"
+                    height="80"></canvas>
+                <!--right hand  70*80 -->
+                <canvas style=" position: absolute; left: 5%; top: 70%; z-index: 2;" id="myCanvas4" width="80"
+                    height="80"></canvas> <!-- left foot -->
+                <canvas style=" position: absolute; left: 55%; top: 70%; z-index: 2;" id="myCanvas5" width="80"
+                    height="80"></canvas> <!-- right foot -->
+            </div>
+        </div>
 
-                <div class="score"><p id="numbers">0</p><img src="images/star.png" alt="star"></div>
+        <div class="score">
+            <p id="numbers">0</p><img src="images/star.png" alt="star">
+        </div>
 
-                <div class="kirby-life">
-                <img class="hearth" src="images/hearth.gif_c200" alt="gif d'un coeur qui tourne">
-                <p class="game-life"></p>
-                </div>
+        <div class="kirby-life">
+            <img class="hearth" src="images/hearth.gif_c200" alt="gif d'un coeur qui tourne">
+            <p class="game-life"></p>
+        </div>
     </section>
 
     <section class="bonus-container">
@@ -48,42 +50,42 @@
             <button id="chrono"></button>
             <section class=" multiplicateur ">
                 <ul>
-                    <div class ="bottom-fire">
-                    <button id="multiplicateur" onclick = "fire()">
+
+                    <button class="bottom-fire" onclick="fire()">
                         <li>Element feux</li>
                         <li>X2</li>
                         <li>30 étoiles</li>
-                    </button></div>
+                    </button>
                 </ul>
 
-                <ul><div class = "bottom-water" onclick ="water()">
-                    <button id="multiplicateur">
+                <ul>
+                    <button class="bottom-water" onclick="water()">
                         <li>Element eau </li>
+                        <li>X5</li>
+                        <li>100 étoiles</li>
+                    </button>
+                </ul>
+
+                <ul>
+                    <button class="bottom-frost" onclick="frost()">
+                        <li>Element glace </li>
                         <li>X10</li>
                         <li>500 étoiles</li>
-                    </button></div>
+                    </button>
                 </ul>
 
-                <ul><div class ="bottom-frost"onclick ="frost()">
-                    <button id="multiplicateur">
-                        <li>Element glace </li>
-                        <li>X20</li>
-                        <li>1000 étoiles</li>
-                    </button></div>
-                </ul>
-
-                <ul><div class ="bottom-rainbow"onclick =rainbow()>
-                    <button id="multiplicateur">
+                <ul>
+                    <button class="bottom-rainbow" onclick=rainbow()>
                         <li>Element arc-en-ciel </li>
-                        <li>X100</li>
-                        <li>10000 étoiles</li>
-                    </button></div>
+                        <li>X30</li>
+                        <li>1000 étoiles</li>
+                    </button>
                 </ul>
             </section>
         </section>
 
 
-    <script src='script.js'></script>
+        <script src='script.js'></script>
 </body>
 
 </html>
