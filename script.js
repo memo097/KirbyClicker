@@ -1,4 +1,6 @@
 var clictime = 10;
+var autoactif = false;
+var actif = false;
 var timer = 30;
 var score = 0;
 var numbers = document.getElementById("numbers");
@@ -10,53 +12,99 @@ bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
 var multiplier = 1;
 const main = document.querySelector(".main-container")
 var counter =0
-if (score < 5000 ) bonus.disabled = true
+
+var fires = document.querySelector(".bottom-fire")
+var waters = document.querySelector(".bottom-water")
+var frosts = document.querySelector(".bottom-frost")
+var rainbows = document.querySelector(".bottom-rainbow")
+var fireState = false;
+var waterState = false;
+var frostState = false;
+var rainbowState = false;
+
+if (score < 5000) bonus.disabled = true
 else bonus.disabled = false
+if (score < 30) fires.disabled = true
+else fires.disabled = false
+if (score < 100) waters.disabled = true
+else waters.disabled = false
+if (score < 500) frosts.disabled = true
+else frosts.disabled = false
+if (score < 1000) rainbows.disabled = true
+else rainbows.disabled = false
+
+if (score < 200 ) document.getElementById("autoclick").disabled = true
+else document.getElementById("autoclick").disabled = false
 
 const motion = () => {
     const animations = [1, 2, 3, 4]
     setInterval(() => {
-        let animation = animations[Math.round(Math.random()*3)]
+        let animation = animations[Math.round(Math.random() * 3)]
         canvasContainer.style.animation = `xAxis${animation} 4000ms linear`
         cookie.style.animation = `yAxis${animation} 4000ms ease-in-out`
     }, 4000)
 }
 motion()
 
-function fire () {
+function fire() {
+
+    score = score - 30
+    numbers.textContent = score
     multiplier = 2;
     main.style.backgroundImage = 'url("images/background-fire.jpg")'
     cookie.style.boxShadow = '0 0 100px 50px rgb(230, 30, 40)'
+    fires.disabled = true
+    fireState = true
 }
-function water () {
-    multiplier = 10;
+function water() {
+    score = score - 100
+    numbers.textContent = score
+    multiplier = 5;
     main.style.backgroundImage = 'url("images/background-water.jpg")'
     cookie.style.boxShadow = '0 0 100px 50px rgb(80, 50, 160)'
+    waters.disabled = true
+    waterState = true
 }
-function frost () {
-    multiplier = 20;
+function frost() {
+    score = score - 500
+    numbers.textContent = score
+    multiplier = 10;
     main.style.backgroundImage = 'url("images/background-ice.jpg")'
     cookie.style.boxShadow = '0 0 100px 50px rgb(100, 250, 230)'
+    frosts.disabled = true
+    frostState = true
 }
-function rainbow () {
-    multiplier = 100;
+function rainbow() {
+    score = score - 1000
+    numbers.textContent = score
+    multiplier = 30;
     main.style.backgroundImage = 'url("images/background-final.gif")'
     cookie.style.boxShadow = '0 0 100px 50px rgb(200, 70, 200)'
+    rainbows.disabled = true
+    rainbowState = true
+
 }
 function autoclicker(){
+    document.getElementById("autoclick").disabled = true
+    autoactif = true
+    score = score - 200
+    numbers.textContent = score
 var durerclick = setInterval(function(){
-    document.getElementsByClassName("autoclick")
     myCanvas1.click()
     clictime--
     if(clictime==0){
     clearInterval(durerclick)
     clictime=10
+    if(score < 200) document.getElementById("autoclick").disabled = true
+    else document.getElementById("autoclick").disabled = false
+    autoactif = false
     }
 },1000)
 }
 console.log(score, 1)
-bonus.addEventListener("click", function(){
+bonus.addEventListener("click", function () {
     bonus.disabled = true
+    actif = true
     score = score - 5000
     numbers.textContent = score
     multiplier = multiplier*2
@@ -68,29 +116,48 @@ var countdown = setInterval(function(){
         clearInterval(countdown)
         if (score < 5000 ) bonus.disabled = true
         else bonus.disabled = false
-        timer=10
+        timer=30
+        actif = false
         bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
-        multiplier = multiplier/2
+        if (timer == 0) {
+            bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
+            clearInterval(countdown)
+            if (score < 5000) bonus.disabled = true
+            else bonus.disabled = false
+            timer = 10
+            bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
+            multiplier = multiplier / 2
+        }
     }
-}, 1000);
-});
+}, 1000)
+})
 
-main.onclick=(e)=>gameover(e)
+main.onclick = (e) => gameover(e)
 document.querySelector(".game-life").innerHTML = `x${life}`
-function gameover(e){
-    if(!e.path[0].id.includes('myCanvas')){
+function gameover(e) {
+    if (!e.path[0].id.includes('myCanvas')) {
         life--
-        if(life==0){
-            document.querySelector(".game-over").style.animation="gameOver 700ms ease-in-out forwards"
-            document.querySelector(".gif-retry").style.animation="gifRetry 3s ease-in forwards 700ms"
-            document.querySelector(".gif-retry button").style.animation="buttonRetry 3s ease-in 700ms"
-            document.querySelector(".main-container").onclick=(e)=false
+        if (life == 0) {
+            document.querySelector(".game-over").style.animation = "gameOver 700ms ease-in-out forwards"
+            document.querySelector(".gif-retry").style.animation = "gifRetry 3s ease-in forwards 700ms"
+            document.querySelector(".gif-retry button").style.animation = "buttonRetry 3s ease-in 700ms"
+            document.querySelector(".main-container").onclick = (e) = false
 
         }
-    }else{
-        score = score + (1*multiplier);
-        numbers.textContent = score ;
-        if (score < 5000 ) bonus.disabled = true
+    } else {
+        score = score + (1 * multiplier);
+        numbers.textContent = score;
+       
+       
+        if (score < 30 || fireState) fires.disabled = true
+        else fires.disabled = false
+        if (score < 100 || waterState) waters.disabled = true
+        else waters.disabled = false
+        if (score < 500 || frostState) frosts.disabled = true
+        else frosts.disabled = false
+        if (score < 1000 ) rainbows.disabled = true
+        else rainbows.disabled = false
+        if (score < 5000 || actif) bonus.disabled = true
         else bonus.disabled = false
         counter++
         document.querySelector("#bigCanvas").innerHTML = document.querySelector("#bigCanvas").innerHTML + `<img class = "star" id="${counter}" src="images/star.png"></img>`
@@ -102,14 +169,40 @@ function gameover(e){
            
         }, 500)
         canvas()
+        if(score < 200 || autoactif) document.getElementById("autoclick").disabled = true
+        else document.getElementById("autoclick").disabled = false
+
+        if(score>=10) document.getElementById("buyLifeButton").disabled = false;
+        else document.getElementById("buyLifeButton").disabled = true;
+        
     }
     document.querySelector(".game-life").innerHTML = `x${life}`
 }
-function tryAgain(){
+function tryAgain() {
     document.location.reload()
 }
-function canvas (){
+
+
+//buyLife function
+buyLifeButton.onclick=()=>buyLife()
+
+function buyLife(){
+    if(score>=10){
+        life++;
+        score=score-10;
+        numbers.textContent = score ;
+        document.querySelector(".game-life").innerHTML = `x${life}`
+    }else{
+        
+        document.getElementById("buyLifeButton").disabled = true;
+    }
+    document.querySelector(".game-life").innerHTML = `x${life}`
+}
+
+function canvas(){
+
  // Canvas Kirby
+ 
  var c1 = document.getElementById("myCanvas1");
  var ctx = c1.getContext("2d");
 
