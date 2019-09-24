@@ -11,6 +11,8 @@ var bonus = document.getElementById('chrono')
 bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
 var multiplier = 1;
 const main = document.querySelector(".main-container")
+var counter =0
+
 var fires = document.querySelector(".bottom-fire")
 var waters = document.querySelector(".bottom-water")
 var frosts = document.querySelector(".bottom-frost")
@@ -157,6 +159,16 @@ function gameover(e) {
         else rainbows.disabled = false
         if (score < 5000 || actif) bonus.disabled = true
         else bonus.disabled = false
+        counter++
+        document.querySelector("#bigCanvas").innerHTML = document.querySelector("#bigCanvas").innerHTML + `<img class = "star" id="${counter}" src="images/star.png"></img>`
+    
+             setTimeout(function (){
+                var random = Math.round(Math.random())
+                document.getElementById(`${counter}`).style.animation= `${(random%2===0?'falling': 'falling2')} 0.2s ease-in-out`;
+                console.log(Math.round(random)%2 === 0)
+           
+        }, 500)
+        canvas()
         if(score < 200 || autoactif) document.getElementById("autoclick").disabled = true
         else document.getElementById("autoclick").disabled = false
 
@@ -187,7 +199,7 @@ function buyLife(){
     document.querySelector(".game-life").innerHTML = `x${life}`
 }
 
-
+function canvas(){
 
  // Canvas Kirby
  
@@ -314,4 +326,6 @@ function buyLife(){
  ctx5.fillStyle = "#bf0000"; //dark red
  ctx5.fill();
 
- //CANVAS END*/
+ //CANVAS END
+}
+canvas()
