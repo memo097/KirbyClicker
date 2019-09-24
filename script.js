@@ -107,11 +107,9 @@ bonus.addEventListener("click", function () {
     actif = true
     score = score - 5000
     numbers.textContent = score
-    multiplier = multiplier*2
-var countdown = setInterval(function(){
-    timer -- 
-    bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
-    if(timer == 0){
+    multiplier = multiplier * 2
+    var countdown = setInterval(function () {
+        timer--
         bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
         clearInterval(countdown)
         if (score < 5000 ) bonus.disabled = true
@@ -142,6 +140,7 @@ function gameover(e) {
             document.querySelector(".gif-retry").style.animation = "gifRetry 3s ease-in forwards 700ms"
             document.querySelector(".gif-retry button").style.animation = "buttonRetry 3s ease-in 700ms"
             document.querySelector(".main-container").onclick = (e) = false
+            musicStart1.pause();
 
         }
     } else {
@@ -172,9 +171,9 @@ function gameover(e) {
         if(score < 200 || autoactif) document.getElementById("autoclick").disabled = true
         else document.getElementById("autoclick").disabled = false
 
-        if(score>=10) document.getElementById("buyLifeButton").disabled = false;
+        if (score >= 10) document.getElementById("buyLifeButton").disabled = false;
         else document.getElementById("buyLifeButton").disabled = true;
-        
+
     }
     document.querySelector(".game-life").innerHTML = `x${life}`
 }
@@ -184,20 +183,64 @@ function tryAgain() {
 
 
 //buyLife function
-buyLifeButton.onclick=()=>buyLife()
+buyLifeButton.onclick = () => buyLife()
 
-function buyLife(){
-    if(score>=10){
+function buyLife() {
+    if (score >= 10) {
         life++;
-        score=score-10;
-        numbers.textContent = score ;
+        score = score - 10;
+        numbers.textContent = score;
         document.querySelector(".game-life").innerHTML = `x${life}`
-    }else{
-        
+    } else {
+
         document.getElementById("buyLifeButton").disabled = true;
     }
     document.querySelector(".game-life").innerHTML = `x${life}`
 }
+
+//MOUSIC
+//MUSIC starts on Click of Main Field
+canvasContainer.onclick = () => musicStart()
+var musicStart1 = document.getElementById("musicStart");
+musicStart1.volume = 0.4;       //sets lower volume
+
+function musicStart() {
+    musicStart1.play();
+} 
+
+//music - click Kirby
+bigCanvas.onclick = () => kirbyClick()
+var kirbyClick1 = document.getElementById("kirbyClick");
+
+function kirbyClick() {
+    kirbyClick1.play();
+}
+
+//music - click out of Kirby
+/* main-container.onclick = () => miss()
+var miss1 = document.getElementById("miss");
+
+function miss() {
+    miss1.play();
+}  */
+
+/* fire.onclick = () => musicFire()
+var music2 = document.getElementById("musicFire");
+
+function musicFire() {
+    music2.play();
+}
+
+water.onclick = () => musicWater()
+var music3 = document.getElementById("musicWater");
+
+function musicWater() {
+    music3.play();
+} */
+
+
+
+
 
 function canvas(){
 

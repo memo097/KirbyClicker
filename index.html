@@ -16,7 +16,16 @@
         <button onclick="tryAgain()">Play Again</button>
     </div>
 
+    <audio src="./sound/02 - Title.mp3" id="musicStart" loop="loop" autoplay="autoplay"></audio>
+    <audio src="./sound/kirbyClick.wav" id="kirbyClick"></audio>
+    <audio src="./sound/miss.wav" id="miss"></audio>
+    <audio src="./sound/10 - Vegetable Valley _Intro_.mp3" id="musicFire" loop="loop" autoplay="autoplay"></audio>
+    <audio src="./sound/04 - Ice Cream Island Map Screen.mp3" id="musicWater" loop="loop" autoplay="autoplay"></audio>
+
+
+
     <section class="main-container">
+
         <div id="canvas-container">
             <div id="bigCanvas">
                 <!-- side was 300x300 -->
@@ -85,15 +94,25 @@
                     </button>
                 <ul>
 
-                <ul><div class ="buyLife"onclick ="buyLife()">
-                    <button id="buyLifeButton">
-                        <li>Buy Life </li>
-                        <li>X1</li>
-                        <li>10 étoiles</li>
-                    </button></div>
+                <ul>
+                    <div class="buyLife" onclick="buyLife()">
+                        <button id="buyLifeButton">
+                            <li>Buy Life </li>
+                            <li>X1</li>
+                            <li>10 étoiles</li>
+                        </button></div>
                 </ul>
+
+                <button class="autoclick" onclick="autoclicker()">AUTOCLICK
+                </button>
+
+                <!-- Sound button-->
+<!--                 <audio controls autoplay loop style="margin-top:20px">
+                    <source id="startMusic" src="./sound/02 - Title.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio> -->
+                
             </section>
-        </section>
 
 
         <script src='script.js'></script>
