@@ -107,12 +107,35 @@ function gameover(e){
         else bonus.disabled = false
         if(score < 200 || autoactif) document.getElementById("autoclick").disabled = true
         else document.getElementById("autoclick").disabled = false
+
+        if(score>=10) document.getElementById("buyLifeButton").disabled = false;
+        else document.getElementById("buyLifeButton").disabled = true;
+        
     }
     document.querySelector(".game-life").innerHTML = `x${life}`
 }
 function tryAgain(){
     document.location.reload()
 }
+
+
+//buyLife function
+buyLifeButton.onclick=()=>buyLife()
+
+function buyLife(){
+    if(score>=10){
+        life++;
+        score=score-10;
+        numbers.textContent = score ;
+        document.querySelector(".game-life").innerHTML = `x${life}`
+    }else{
+        
+        document.getElementById("buyLifeButton").disabled = true;
+    }
+    document.querySelector(".game-life").innerHTML = `x${life}`
+}
+
+
 
  // Canvas Kirby
  var c1 = document.getElementById("myCanvas1");
