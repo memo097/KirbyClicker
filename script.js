@@ -8,6 +8,10 @@ var bonus = document.getElementById('chrono')
 bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
 var multiplier = 1;
 const main = document.querySelector(".main-container")
+const currentScore = document.getElementById('current-score')
+const bestScore = document.getElementById('best-score')
+
+if (window.localStorage.getItem('best')) bestScore.textContent = window.localStorage.getItem('best')
 
 if (score < 5000 ) bonus.disabled = true
 else bonus.disabled = false
@@ -73,13 +77,16 @@ function gameover(e){
             document.querySelector(".gif-retry").style.animation="gifRetry 3s ease-in forwards 700ms"
             document.querySelector(".gif-retry button").style.animation="buttonRetry 3s ease-in 700ms"
             document.querySelector(".main-container").onclick=(e)=false
-
+            if (parseInt(currentScore.textContent) > parseInt(bestScore.textContent)) {
+                window.localStorage.setItem('best', currentScore.textContent)
+            }
         }
     }else{
         score = score + (1*multiplier);
         numbers.textContent = score ;
         if (score < 5000 ) bonus.disabled = true
         else bonus.disabled = false
+        currentScore.textContent = parseInt(currentScore.textContent) + 1
     }
     document.querySelector(".game-life").innerHTML = `x${life}`
 }
