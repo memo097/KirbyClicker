@@ -1,5 +1,6 @@
 var clictime = 10;
-var actif = false
+var autoactif = false;
+var actif = false;
 var timer = 30;
 var score = 0;
 var numbers = document.getElementById("numbers");
@@ -10,9 +11,30 @@ var bonus = document.getElementById('chrono')
 bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
 var multiplier = 1;
 const main = document.querySelector(".main-container")
+var counter =0
+
+var fires = document.querySelector(".bottom-fire")
+var waters = document.querySelector(".bottom-water")
+var frosts = document.querySelector(".bottom-frost")
+var rainbows = document.querySelector(".bottom-rainbow")
+var fireState = false;
+var waterState = false;
+var frostState = false;
+var rainbowState = false;
 
 if (score < 5000) bonus.disabled = true
 else bonus.disabled = false
+if (score < 30) fires.disabled = true
+else fires.disabled = false
+if (score < 100) waters.disabled = true
+else waters.disabled = false
+if (score < 500) frosts.disabled = true
+else frosts.disabled = false
+if (score < 1000) rainbows.disabled = true
+else rainbows.disabled = false
+
+if (score < 200 ) document.getElementById("autoclick").disabled = true
+else document.getElementById("autoclick").disabled = false
 
 const motion = () => {
     const animations = [1, 2, 3, 4]
@@ -25,35 +47,59 @@ const motion = () => {
 motion()
 
 function fire() {
+
+    score = score - 30
+    numbers.textContent = score
     multiplier = 2;
     main.style.backgroundImage = 'url("images/background-fire.jpg")'
     cookie.style.boxShadow = '0 0 100px 50px rgb(230, 30, 40)'
+    fires.disabled = true
+    fireState = true
 }
 function water() {
-    multiplier = 10;
+    score = score - 100
+    numbers.textContent = score
+    multiplier = 5;
     main.style.backgroundImage = 'url("images/background-water.jpg")'
     cookie.style.boxShadow = '0 0 100px 50px rgb(80, 50, 160)'
+    waters.disabled = true
+    waterState = true
 }
 function frost() {
-    multiplier = 20;
+    score = score - 500
+    numbers.textContent = score
+    multiplier = 10;
     main.style.backgroundImage = 'url("images/background-ice.jpg")'
     cookie.style.boxShadow = '0 0 100px 50px rgb(100, 250, 230)'
+    frosts.disabled = true
+    frostState = true
 }
 function rainbow() {
-    multiplier = 100;
+    score = score - 1000
+    numbers.textContent = score
+    multiplier = 30;
     main.style.backgroundImage = 'url("images/background-final.gif")'
     cookie.style.boxShadow = '0 0 100px 50px rgb(200, 70, 200)'
+    rainbows.disabled = true
+    rainbowState = true
+
 }
-function autoclicker() {
-    var durerclick = setInterval(function () {
-        document.getElementsByClassName("autoclick")
-        myCanvas1.click()
-        clictime--
-        if (clictime == 0) {
-            clearInterval(durerclick)
-            clictime = 10
-        }
-    }, 1000)
+function autoclicker(){
+    document.getElementById("autoclick").disabled = true
+    autoactif = true
+    score = score - 200
+    numbers.textContent = score
+var durerclick = setInterval(function(){
+    myCanvas1.click()
+    clictime--
+    if(clictime==0){
+    clearInterval(durerclick)
+    clictime=10
+    if(score < 200) document.getElementById("autoclick").disabled = true
+    else document.getElementById("autoclick").disabled = false
+    autoactif = false
+    }
+},1000)
 }
 console.log(score, 1)
 bonus.addEventListener("click", function () {
@@ -65,18 +111,24 @@ bonus.addEventListener("click", function () {
     var countdown = setInterval(function () {
         timer--
         bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
+        clearInterval(countdown)
+        if (score < 5000 ) bonus.disabled = true
+        else bonus.disabled = false
+        timer=30
+        actif = false
+        bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
         if (timer == 0) {
             bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
             clearInterval(countdown)
             if (score < 5000) bonus.disabled = true
             else bonus.disabled = false
-            timer = 30
-            actif = false
+            timer = 10
             bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
             multiplier = multiplier / 2
         }
-    }, 1000);
-});
+    }
+}, 1000)
+})
 
 main.onclick = (e) => gameover(e)
 document.querySelector(".game-life").innerHTML = `x${life}`
@@ -94,8 +146,30 @@ function gameover(e) {
     } else {
         score = score + (1 * multiplier);
         numbers.textContent = score;
+       
+       
+        if (score < 30 || fireState) fires.disabled = true
+        else fires.disabled = false
+        if (score < 100 || waterState) waters.disabled = true
+        else waters.disabled = false
+        if (score < 500 || frostState) frosts.disabled = true
+        else frosts.disabled = false
+        if (score < 1000 ) rainbows.disabled = true
+        else rainbows.disabled = false
         if (score < 5000 || actif) bonus.disabled = true
         else bonus.disabled = false
+        counter++
+        document.querySelector("#bigCanvas").innerHTML = document.querySelector("#bigCanvas").innerHTML + `<img class = "star" id="${counter}" src="images/star.png"></img>`
+    
+             setTimeout(function (){
+                var random = Math.round(Math.random())
+                document.getElementById(`${counter}`).style.animation= `${(random%2===0?'falling': 'falling2')} 0.2s ease-in-out`;
+                console.log(Math.round(random)%2 === 0)
+           
+        }, 500)
+        canvas()
+        if(score < 200 || autoactif) document.getElementById("autoclick").disabled = true
+        else document.getElementById("autoclick").disabled = false
 
         if (score >= 10) document.getElementById("buyLifeButton").disabled = false;
         else document.getElementById("buyLifeButton").disabled = true;
@@ -166,129 +240,135 @@ function musicWater() {
 
 
 
-// CANVAS KIRBY
-var c1 = document.getElementById("myCanvas1");
-var ctx = c1.getContext("2d");
 
 
-//body
-ctx.beginPath();
-ctx.arc(100, 100, 100, 0, 2 * Math.PI);
-ctx.stroke();
-ctx.fillStyle = "pink";
-ctx.fill();
+function canvas(){
 
-//EYES
-//up-left - elipse
-ctx.beginPath();
-ctx.ellipse(80, 80, 10, 30, Math.PI / 1, 0, 2 * Math.PI);
-ctx.stroke();
-ctx.fillStyle = "black";
-ctx.fill();
-//up-right - elipse
-ctx.beginPath();
-ctx.ellipse(120, 80, 10, 30, Math.PI / 1, 0, 2 * Math.PI);
-ctx.stroke();
-ctx.fillStyle = "black";
-ctx.fill();
-//small WHITE PUPILS
-//up-left - elipse
-ctx.beginPath();
-ctx.ellipse(80, 65, 5, 10, Math.PI / 1, 0, 2 * Math.PI);
-ctx.stroke();
-ctx.fillStyle = "white";
-ctx.fill();
-//up-right - elipse
-ctx.beginPath();
-ctx.ellipse(120, 65, 5, 10, Math.PI / 1, 0, 2 * Math.PI);
-ctx.stroke();
-ctx.fillStyle = "white";
-ctx.fill();
-//small BLUE PUPILS
-//up-left - elipse
-ctx.beginPath();
-ctx.ellipse(80, 93, 8, 10, Math.PI / 9, 0, 1 * Math.PI);
-ctx.stroke();
-ctx.fillStyle = "blue";
-ctx.fill();
-//up-right - elipse
-ctx.beginPath();
-ctx.ellipse(120, 93, 8, 10, Math.PI / -9, 0, 1 * Math.PI); //-9 turns down, 1 - makes half elipse
-ctx.stroke();
-ctx.fillStyle = "blue";
-ctx.fill();
-
-//MOUTH
-ctx.beginPath();
-ctx.ellipse(100, 125, 10, 15, Math.PI / 1, 0, 2 * Math.PI);
-ctx.stroke();
-ctx.fillStyle = "brown";
-ctx.fill();
-//tongue
-ctx.beginPath();
-ctx.ellipse(100, 127, 8, 10, Math.PI / -5, 0, 1.5 * Math.PI); //-9 turns down, 1 - makes half elipse
-ctx.stroke();
-ctx.fillStyle = "#F08080"; //warm pink
-ctx.fill();
-
-//CHEEKS
-ctx.beginPath();
-ctx.ellipse(60, 120, 20, 10, Math.PI / 6, 0, 2 * Math.PI);
-ctx.stroke();
-ctx.fillStyle = "#F08080"; //warm pink
-ctx.fill();
-//2nd cheek
-ctx.beginPath();
-ctx.ellipse(150, 120, 20, 10, Math.PI / -6, 0, 2 * Math.PI);
-ctx.stroke();
-ctx.fillStyle = "#F08080"; //warm pink
-ctx.fill();
+ // Canvas Kirby
+ 
+ var c1 = document.getElementById("myCanvas1");
+ var ctx = c1.getContext("2d");
 
 
-//OTHER CANVAS
+ //body
+ ctx.beginPath();
+ ctx.arc(100, 100, 100, 0, 2 * Math.PI);
+ ctx.stroke();
+ ctx.fillStyle = "pink";
+ ctx.fill();
 
-//HANDS & FEET
-//CANVAS-2 //up-left - elipse
-var c2 = document.getElementById("myCanvas2");
-var ctx2 = c2.getContext("2d");
+ //EYES
+ //up-left - elipse
+ ctx.beginPath();
+ ctx.ellipse(80, 80, 10, 30, Math.PI / 1, 0, 2 * Math.PI);
+ ctx.stroke();
+ ctx.fillStyle = "black";
+ ctx.fill();
+ //up-right - elipse
+ ctx.beginPath();
+ ctx.ellipse(120, 80, 10, 30, Math.PI / 1, 0, 2 * Math.PI);
+ ctx.stroke();
+ ctx.fillStyle = "black";
+ ctx.fill();
+ //small WHITE PUPILS
+ //up-left - elipse
+ ctx.beginPath();
+ ctx.ellipse(80, 65, 5, 10, Math.PI / 1, 0, 2 * Math.PI);
+ ctx.stroke();
+ ctx.fillStyle = "white";
+ ctx.fill();
+ //up-right - elipse
+ ctx.beginPath();
+ ctx.ellipse(120, 65, 5, 10, Math.PI / 1, 0, 2 * Math.PI);
+ ctx.stroke();
+ ctx.fillStyle = "white";
+ ctx.fill();
+ //small BLUE PUPILS
+ //up-left - elipse
+ ctx.beginPath();
+ ctx.ellipse(80, 93, 8, 10, Math.PI / 9, 0, 1 * Math.PI);
+ ctx.stroke();
+ ctx.fillStyle = "blue";
+ ctx.fill();
+ //up-right - elipse
+ ctx.beginPath();
+ ctx.ellipse(120, 93, 8, 10, Math.PI / -9, 0, 1 * Math.PI); //-9 turns down, 1 - makes half elipse
+ ctx.stroke();
+ ctx.fillStyle = "blue";
+ ctx.fill();
 
-ctx2.beginPath();
-ctx2.ellipse(40, 35, 30, 40, Math.PI / 1.5, 0, 2 * Math.PI);
-ctx2.stroke();
-ctx2.fillStyle = "pink";
-ctx2.fill();
+ //MOUTH
+ ctx.beginPath();
+ ctx.ellipse(100, 125, 10, 15, Math.PI / 1, 0, 2 * Math.PI);
+ ctx.stroke();
+ ctx.fillStyle = "brown";
+ ctx.fill();
+ //tongue
+ ctx.beginPath();
+ ctx.ellipse(100, 127, 8, 10, Math.PI / -5, 0, 1.5 * Math.PI); //-9 turns down, 1 - makes half elipse
+ ctx.stroke();
+ ctx.fillStyle = "#F08080"; //warm pink
+ ctx.fill();
 
-//CANVAS-3 //up-right - elipse
-var c3 = document.getElementById("myCanvas3");
-var ctx3 = c3.getContext("2d");
-
-ctx3.beginPath();
-ctx3.ellipse(35, 35, 30, 40, Math.PI / -1.5, 0, 2 * Math.PI);
-ctx3.stroke();
-ctx3.fillStyle = "pink";
-ctx3.fill();
-
-//FEET
-//CANVAS-4 //down-left - elipse
-var c4 = document.getElementById("myCanvas4");
-var ctx4 = c4.getContext("2d");
-
-ctx4.beginPath();
-ctx4.ellipse(50, 35, 30, 50, Math.PI / 4, 0, 2 * Math.PI);
-ctx4.stroke();
-ctx4.fillStyle = "#bf0000";
-ctx4.fill();
+ //CHEEKS
+ ctx.beginPath();
+ ctx.ellipse(60, 120, 20, 10, Math.PI / 6, 0, 2 * Math.PI);
+ ctx.stroke();
+ ctx.fillStyle = "#F08080"; //warm pink
+ ctx.fill();
+ //2nd cheek
+ ctx.beginPath();
+ ctx.ellipse(150, 120, 20, 10, Math.PI / -6, 0, 2 * Math.PI);
+ ctx.stroke();
+ ctx.fillStyle = "#F08080"; //warm pink
+ ctx.fill();
 
 
-//CANVAS-5 - down-right - elipse
-var c5 = document.getElementById("myCanvas5");
-var ctx5 = c5.getContext("2d");
+ //OTHER CANVAS
 
-ctx5.beginPath();
-ctx5.ellipse(35, 35, 30, 50, Math.PI / -4, 0, 2 * Math.PI);
-ctx5.stroke();
-ctx5.fillStyle = "#bf0000"; //dark red
-ctx5.fill();
+ //HANDS & FEET
+ //CANVAS-2 //up-left - elipse
+ var c2 = document.getElementById("myCanvas2");
+ var ctx2 = c2.getContext("2d");
+
+ ctx2.beginPath();
+ ctx2.ellipse(40, 35, 30, 40, Math.PI / 1.5, 0, 2 * Math.PI);
+ ctx2.stroke();
+ ctx2.fillStyle = "pink";
+ ctx2.fill();
+
+ //CANVAS-3 //up-right - elipse
+ var c3 = document.getElementById("myCanvas3");
+ var ctx3 = c3.getContext("2d");
+
+ ctx3.beginPath();
+ ctx3.ellipse(35, 35, 30, 40, Math.PI / -1.5, 0, 2 * Math.PI);
+ ctx3.stroke();
+ ctx3.fillStyle = "pink";
+ ctx3.fill();
+
+ //FEET
+ //CANVAS-4 //down-left - elipse
+ var c4 = document.getElementById("myCanvas4");
+ var ctx4 = c4.getContext("2d");
+
+ ctx4.beginPath();
+ ctx4.ellipse(50, 35, 30, 50, Math.PI / 4, 0, 2 * Math.PI);
+ ctx4.stroke();
+ ctx4.fillStyle = "#bf0000";
+ ctx4.fill();
+
+
+ //CANVAS-5 - down-right - elipse
+ var c5 = document.getElementById("myCanvas5");
+ var ctx5 = c5.getContext("2d");
+
+ ctx5.beginPath();
+ ctx5.ellipse(35, 35, 30, 50, Math.PI / -4, 0, 2 * Math.PI);
+ ctx5.stroke();
+ ctx5.fillStyle = "#bf0000"; //dark red
+ ctx5.fill();
 
  //CANVAS END
-
+}
+canvas()
