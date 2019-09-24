@@ -1,3 +1,4 @@
+var clictime = 10;
 var timer = 30;
 var score = 0;
 var numbers = document.getElementById("numbers");
@@ -41,6 +42,17 @@ function rainbow () {
     multiplier = 100;
     main.style.backgroundImage = 'url("images/background-final.gif")'
     cookie.style.boxShadow = '0 0 100px 50px rgb(200, 70, 200)'
+}
+function autoclicker(){
+var durerclick = setInterval(function(){
+    document.getElementsByClassName("autoclick")
+    myCanvas1.click()
+    clictime--
+    if(clictime==0){
+    clearInterval(durerclick)
+    clictime=10
+    }
+},1000)
 }
 console.log(score, 1)
 bonus.addEventListener("click", function(){
