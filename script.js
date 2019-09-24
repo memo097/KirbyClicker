@@ -90,7 +90,7 @@ function gameover(e){
     }else{
         score = score + (1*multiplier);
         numbers.textContent = score ;
-        if (score < 5000 ) bonus.disabled = true
+        if (score < 5000 || actif) bonus.disabled = true
         else bonus.disabled = false
     }
     document.querySelector(".game-life").innerHTML = `x${life}`
