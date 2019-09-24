@@ -1,4 +1,5 @@
 var clictime = 10;
+var actif = false
 var timer = 30;
 var score = 0;
 var numbers = document.getElementById("numbers");
@@ -57,6 +58,7 @@ var durerclick = setInterval(function(){
 console.log(score, 1)
 bonus.addEventListener("click", function(){
     bonus.disabled = true
+    actif = true
     score = score - 5000
     numbers.textContent = score
     multiplier = multiplier*2
@@ -68,7 +70,8 @@ var countdown = setInterval(function(){
         clearInterval(countdown)
         if (score < 5000 ) bonus.disabled = true
         else bonus.disabled = false
-        timer=10
+        timer=30
+        actif = false
         bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
         multiplier = multiplier/2
     }
@@ -90,7 +93,7 @@ function gameover(e){
     }else{
         score = score + (1*multiplier);
         numbers.textContent = score ;
-        if (score < 5000 ) bonus.disabled = true
+        if (score < 5000 || actif) bonus.disabled = true
         else bonus.disabled = false
     }
     document.querySelector(".game-life").innerHTML = `x${life}`
