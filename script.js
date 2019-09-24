@@ -1,5 +1,6 @@
 var clictime = 10;
-var actif = false
+var autoactif = false;
+var actif = false;
 var timer = 30;
 var score = 0;
 var numbers = document.getElementById("numbers");
@@ -13,6 +14,9 @@ const main = document.querySelector(".main-container")
 
 if (score < 5000 ) bonus.disabled = true
 else bonus.disabled = false
+
+if (score < 200 ) document.getElementById("autoclick").disabled = true
+else document.getElementById("autoclick").disabled = false
 
 const motion = () => {
     const animations = [1, 2, 3, 4]
@@ -45,13 +49,19 @@ function rainbow () {
     cookie.style.boxShadow = '0 0 100px 50px rgb(200, 70, 200)'
 }
 function autoclicker(){
+    document.getElementById("autoclick").disabled = true
+    autoactif = true
+    score = score - 200
+    numbers.textContent = score
 var durerclick = setInterval(function(){
-    document.getElementsByClassName("autoclick")
     myCanvas1.click()
     clictime--
     if(clictime==0){
     clearInterval(durerclick)
     clictime=10
+    if(score < 200) document.getElementById("autoclick").disabled = true
+    else document.getElementById("autoclick").disabled = false
+    autoactif = false
     }
 },1000)
 }
@@ -95,6 +105,8 @@ function gameover(e){
         numbers.textContent = score ;
         if (score < 5000 || actif) bonus.disabled = true
         else bonus.disabled = false
+        if(score < 200 || autoactif) document.getElementById("autoclick").disabled = true
+        else document.getElementById("autoclick").disabled = false
 
         if(score>=10) document.getElementById("buyLifeButton").disabled = false;
         else document.getElementById("buyLifeButton").disabled = true;
