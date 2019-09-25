@@ -116,6 +116,7 @@ var durerclick = setInterval(function(){
     clictime= clictimeStore
     if(score < 200) document.getElementById("autoclick").disabled = true
     else document.getElementById("autoclick").disabled = false
+    if(parseInt(currentScore.textContent) > 250) document.getElementById("autoclick").disabled = true
     autoactif = false
     }
 },1000-bonusclick)
@@ -191,12 +192,12 @@ function gameover(e) {
         canvas()
         if(score < 200 || autoactif) document.getElementById("autoclick").disabled = true
         else document.getElementById("autoclick").disabled = false
-        if(parseInt(currentScore.textContent) > 600) document.getElementById("autoclick").disabled = true
+        if(parseInt(currentScore.textContent) > 250) document.getElementById("autoclick").disabled = true
         if (score < 5 ) {document.getElementById("bonusclick").disabled = true; console.log(55)}
         else document.getElementById("bonusclick").disabled = false
         if (bonusclick === 600) document.getElementById("bonusclick").disabled = true
         if(parseInt(currentScore.textContent) > 300) document.getElementById("bonusclick").disabled = true
-
+        
         if (score >= 10) document.getElementById("buyLifeButton").disabled = false;
         else document.getElementById("buyLifeButton").disabled = true;
 
