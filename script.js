@@ -11,30 +11,33 @@ var bonus = document.getElementById('chrono')
 bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
 var multiplier = 1;
 const main = document.querySelector(".main-container")
-var counter =0
+var counter = 0
+const currentScore = document.getElementById('current-score')
+const bestScore = document.getElementById('best-score')
 
-var fires = document.querySelector(".bottom-fire")
-var waters = document.querySelector(".bottom-water")
-var frosts = document.querySelector(".bottom-frost")
-var rainbows = document.querySelector(".bottom-rainbow")
+if (window.localStorage.getItem('best')) bestScore.textContent = window.localStorage.getItem('best')
+
+var fires = document.querySelector(".button-fire")
+var waters = document.querySelector(".button-water")
+var frosts = document.querySelector(".button-frost")
+var rainbows = document.querySelector(".button-rainbow")
 var fireState = false;
 var waterState = false;
 var frostState = false;
 var rainbowState = false;
 
-if (score < 5000) bonus.disabled = true
-else bonus.disabled = false
-if (score < 30) fires.disabled = true
-else fires.disabled = false
-if (score < 100) waters.disabled = true
-else waters.disabled = false
-if (score < 500) frosts.disabled = true
-else frosts.disabled = false
-if (score < 1000) rainbows.disabled = true
-else rainbows.disabled = false
+bonus.disabled = true
 
-if (score < 200 ) document.getElementById("autoclick").disabled = true
-else document.getElementById("autoclick").disabled = false
+fires.disabled = true
+waters.disabled = true
+frosts.disabled = true
+rainbows.disabled = true
+
+
+document.getElementById("autoclick").disabled = true
+
+
+document.getElementById("buyLifeButton").disabled = true;
 
 const motion = () => {
     const animations = [1, 2, 3, 4]
@@ -126,8 +129,7 @@ bonus.addEventListener("click", function () {
             bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
             multiplier = multiplier / 2
         }
-    }
-}, 1000)
+    }, 1000)
 })
 
 main.onclick = (e) => gameover(e)
@@ -135,13 +137,15 @@ document.querySelector(".game-life").innerHTML = `x${life}`
 function gameover(e) {
     if (!e.path[0].id.includes('myCanvas')) {
         life--
-        if (life == 0) {
-            document.querySelector(".game-over").style.animation = "gameOver 700ms ease-in-out forwards"
-            document.querySelector(".gif-retry").style.animation = "gifRetry 3s ease-in forwards 700ms"
-            document.querySelector(".gif-retry button").style.animation = "buttonRetry 3s ease-in 700ms"
-            document.querySelector(".main-container").onclick = (e) = false
+        if(life==0){
+            document.querySelector(".game-over").style.animation="gameOver 700ms ease-in-out forwards"
+            document.querySelector(".gif-retry").style.animation="gifRetry 3s ease-in forwards 700ms"
+            document.querySelector(".gif-retry button").style.animation="buttonRetry 3s ease-in 700ms"
+            document.querySelector(".main-container").onclick=(e)=false
             musicStart1.pause();
-
+            if (parseInt(currentScore.textContent) > parseInt(bestScore.textContent)) {
+                window.localStorage.setItem('best', currentScore.textContent)
+            }
         }
     } else {
         score = score + (1 * multiplier);
@@ -158,6 +162,7 @@ function gameover(e) {
         else rainbows.disabled = false
         if (score < 5000 || actif) bonus.disabled = true
         else bonus.disabled = false
+        currentScore.textContent = parseInt(currentScore.textContent) + 1
         counter++
         document.querySelector("#bigCanvas").innerHTML = document.querySelector("#bigCanvas").innerHTML + `<img class = "star" id="${counter}" src="images/star.png"></img>`
     
@@ -183,19 +188,13 @@ function tryAgain() {
 
 
 //buyLife function
-buyLifeButton.onclick = () => buyLife()
 
 function buyLife() {
-    if (score >= 10) {
         life++;
         score = score - 10;
         numbers.textContent = score;
         document.querySelector(".game-life").innerHTML = `x${life}`
-    } else {
-
-        document.getElementById("buyLifeButton").disabled = true;
-    }
-    document.querySelector(".game-life").innerHTML = `x${life}`
+        if (score < 10) document.getElementById("buyLifeButton").disabled = true;
 }
 
 //MOUSIC
