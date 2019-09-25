@@ -4,5 +4,5 @@ Exercice Cookie Clicker. Nous avons décider de faire une version KirbyClicker e
 
 **A quoi ça ressemble ?**
 [Demo](https://memo097.github.io/KirbyClicker/)
-<img src="images/screenreadme" style="width:30%;">
+<img src="images/screenreadme.png" style="width:30%;">
 
