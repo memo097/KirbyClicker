@@ -180,6 +180,7 @@ body {
   width: 350px;
   align-items: center;
   justify-content: space-between;
+  user-select: none;
 }
 
 .gif-retry img {
