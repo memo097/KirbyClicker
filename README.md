@@ -4,11 +4,11 @@ Exercice Cookie Clicker refaire dans le cadre dans la formation BeCode. Nous avo
 
 **A quoi ça ressemble ?**
 [Demo](https://memo097.github.io/KirbyClicker/)
-<img src="images/screenreadme.png" style="width:30%;">
-<img src="images/firekirby.png" style="width:30%;">
-<img src="images/waterkirby.png" style="width:30%;">
-<img src="images/icekirby.png" style="width:30%;">
-<img src="images/gifkirby.png" style="width:30%;">
+<img src="images/screenreadme.png" style="width:15%;">
+<img src="images/firekirby.png" style="width:15%;">
+<img src="images/waterkirby.png" style="width:15%;">
+<img src="images/icekirby.png" style="width:15%;">
+<img src="images/gifkirby.png" style="width:15%;">
 
 
 ## Prise en main
