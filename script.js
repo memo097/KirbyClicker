@@ -271,8 +271,10 @@ function tryAgain() {
 }
 
 function freelife (){
+    var pointGain=document.getElementById("pointGain");
     heartKey = true
     life++;
+    pointGain.play();
     document.querySelector("#bigCanvas").innerHTML = document.querySelector("#bigCanvas").innerHTML  + `<img id="freelife" src="images/hearth.gif_c200" alt="coeur tournant"></img`
         document.getElementById('freelife').style.animation= 'fallinglife 0.2s forwards'
  setTimeout(function(){
