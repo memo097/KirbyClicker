@@ -265,7 +265,7 @@ function gameover(e) {
     }
     document.querySelector(".game-life").innerHTML = `x${life}`
     }
-}
+
 function tryAgain() {
     document.location.reload()
 }
