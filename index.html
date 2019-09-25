@@ -12,10 +12,18 @@
 <body>
     <img class="game-over" src="images/game-over.jpg" alt="game over">
     <div class="gif-retry">
-    <img src="images/game-over.gif" alt="gif game over">
-    <button onclick="tryAgain()">Play Again</button>
+        <img src="images/game-over.gif" alt="gif game over">
+        <button onclick="tryAgain()">Play Again</button>
     </div>
-    
+
+    <audio src="./sound/02 - Title.mp3" id="musicStart" loop="loop" autoplay="autoplay"></audio>
+    <audio src="./sound/kirbyClick.wav" id="kirbyClick"></audio>
+    <audio src="./sound/miss.wav" id="miss"></audio>
+    <audio src="./sound/10 - Vegetable Valley _Intro_.mp3" id="musicFire" loop="loop" autoplay="autoplay"></audio>
+    <audio src="./sound/04 - Ice Cream Island Map Screen.mp3" id="musicWater" loop="loop" autoplay="autoplay"></audio>
+
+
+
     <section class="main-container">
             <div id="canvas-container">
                     <div id="bigCanvas">
@@ -49,46 +57,63 @@
     </section>
 
     <section class="bonus-container">
-        <section class="chrono">
-            <button id="chrono"></button>
-            <section class=" multiplicateur ">
-                <ul>
-                    <div class ="bottom-fire">
-                    <button id="multiplicateur" onclick = "fire()">
-                        <li>Element feux</li>
-                        <li>X2</li>
-                        <li>30 étoiles</li>
-                    </button></div>
-                </ul>
+        <ul>
+            <li>
+                <button id="chrono"></button>
+            </li>
+            <li>
+                <button class="button-fire" onclick="fire()">
+                    <div><img src="images/flame.png">BONUS x2</div>
+                    <div class="price">30<img src="images/star.png"></div>
+                </button>
+            </li>
 
-                <ul><div class = "bottom-water" onclick ="water()">
-                    <button id="multiplicateur">
-                        <li>Element eau </li>
-                        <li>X10</li>
-                        <li>500 étoiles</li>
-                    </button></div>
-                </ul>
+            <li>
+                <button class="button-water" onclick="water()">
+                    <li>Element eau </li>
+                    <li>X5</li>
+                    <li>100 étoiles</li>
+                </button>
+            </li>
 
-                <ul><div class ="bottom-frost"onclick ="frost()">
-                    <button id="multiplicateur">
-                        <li>Element glace </li>
-                        <li>X20</li>
-                        <li>1000 étoiles</li>
-                    </button></div>
-                </ul>
+            <li>
+                <button class="button-frost" onclick="frost()">
+                    <li>Element glace </li>
+                    <li>X10</li>
+                    <li>500 étoiles</li>
+                </button>
+            </li>
 
-                <ul><div class ="bottom-rainbow"onclick =rainbow()>
-                    <button id="multiplicateur">
-                        <li>Element arc-en-ciel </li>
-                        <li>X100</li>
-                        <li>10000 étoiles</li>
-                    </button></div>
-                </ul>
+            <li>
+                <button class="button-rainbow" onclick=rainbow()>
+                    <li>Element arc-en-ciel </li>
+                    <li>X30</li>
+                    <li>1000 étoiles</li>
+                </button>
+            </li>
+                <button id="autoclick" onclick="autoclicker()">AUTOCLICK
+                </button>
+            <li>
+
+            <li>
+                    <button id="buyLifeButton" onclick="buyLife()">
+                        <li>Buy Life </li>
+                        <li>X1</li>
+                        <li>10 étoiles</li>
+                    </button>
+            </li>
+        </ul>
+
+                <!-- Sound button-->
+<!--                 <audio controls autoplay loop style="margin-top:20px">
+                    <source id="startMusic" src="./sound/02 - Title.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio> -->
+                
             </section>
-        </section>
 
 
-    <script src='script.js'></script>
+        <script src='script.js'></script>
 </body>
 
 </html>
