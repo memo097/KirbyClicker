@@ -266,7 +266,7 @@ function gameover(e) {
         if (bonusclick === 600) document.getElementById("bonusclick").disabled = true
         if(parseInt(currentScore.textContent) > 300) document.getElementById("bonusclick").disabled = true
         
-        if (score >= 1) document.getElementById("buyLifeButton").disabled = false;
+        if (score >=1) document.getElementById("buyLifeButton").disabled = false;
         else document.getElementById("buyLifeButton").disabled = true;
         var alea = Math.round(Math.random() * 100)
         if(alea === 15 && heartKey == false) freelife()
