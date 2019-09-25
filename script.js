@@ -1,3 +1,4 @@
+var bonusclick = 0;
 var clictime = 10;
 var autoactif = false;
 var actif = false;
@@ -39,6 +40,9 @@ document.getElementById("autoclick").disabled = true
 
 
 document.getElementById("buyLifeButton").disabled = true;
+
+if (score < 5) document.getElementById("bonusclick").disabled = true
+else document.getElementById("bonusclick").disabled = false
 
 const motion = () => {
     const animations = [1, 2, 3, 4]
@@ -88,22 +92,35 @@ function rainbow() {
     rainbowState = true
 
 }
-function autoclicker() {
+function bonusclicker(){
+    score = score - 5
+    numbers.textContent = score
+    bonusclick = bonusclick + 200
+    clictime *= 2
+    if (bonusclick === 600) document.getElementById("bonusclick").disabled = true
+    else document.getElementById("bonusclick").disabled = false
+    if (score < 5) document.getElementById("bonusclick").disabled = true
+    else document.getElementById("bonusclick").disabeld = false
+    console.log(bonusclick)
+}
+function autoclicker(){
+    let clictimeStore = clictime
     document.getElementById("autoclick").disabled = true
     autoactif = true
     score = score - 200
     numbers.textContent = score
-    var durerclick = setInterval(function () {
-        myCanvas1.click()
-        clictime--
-        if (clictime == 0) {
-            clearInterval(durerclick)
-            clictime = 10
-            if (score < 200) document.getElementById("autoclick").disabled = true
-            else document.getElementById("autoclick").disabled = false
-            autoactif = false
-        }
-    }, 1000)
+var durerclick = setInterval(function(){
+    myCanvas1.click()
+    clictime--
+    if(clictime==0){
+    clearInterval(durerclick)
+    clictime= clictimeStore
+    if(score < 200) document.getElementById("autoclick").disabled = true
+    else document.getElementById("autoclick").disabled = false
+    if(parseInt(currentScore.textContent) > 250) document.getElementById("autoclick").disabled = true
+    autoactif = false
+    }
+},1000-bonusclick)
 }
 
 bonus.addEventListener("click", function () {
@@ -139,12 +156,12 @@ document.querySelector(".game-life").innerHTML = `x${life}`
 function gameover(e) {
     if (!e.path[0].id.includes('myCanvas')) {
         life--
-        if (life == 0) {
-            document.querySelector(".game-over").style.animation = "gameOver 700ms ease-in-out forwards"
-            document.querySelector(".gif-retry").style.animation = "gifRetry 3s ease-in forwards 700ms"
-            document.querySelector(".gif-retry button").style.animation = "buttonRetry 3s ease-in 700ms"
-            document.querySelector(".main-container").onclick = (e) = false
-            musicStart1.pause();
+        if(life==0){
+            document.querySelector(".game-over").style.animation="gameOver 700ms ease-in-out forwards"
+            document.querySelector(".gif-retry").style.animation="gifRetry 3s ease-in forwards 700ms"
+            document.querySelector(".gif-retry button").style.animation="buttonRetry 3s ease-in 700ms"
+            document.querySelector(".main-container").onclick=(e)=false
+            musicStart1.pause(); //Pauses music at gameover
             if (parseInt(currentScore.textContent) > parseInt(bestScore.textContent)) {
                 window.localStorage.setItem('best', currentScore.textContent)
             }
@@ -175,7 +192,12 @@ function gameover(e) {
         
         if (score < 200 || autoactif) document.getElementById("autoclick").disabled = true
         else document.getElementById("autoclick").disabled = false
-
+        if(parseInt(currentScore.textContent) > 250) document.getElementById("autoclick").disabled = true
+        if (score < 5 ) {document.getElementById("bonusclick").disabled = true; console.log(55)}
+        else document.getElementById("bonusclick").disabled = false
+        if (bonusclick === 600) document.getElementById("bonusclick").disabled = true
+        if(parseInt(currentScore.textContent) > 300) document.getElementById("bonusclick").disabled = true
+        
         if (score >= 10) document.getElementById("buyLifeButton").disabled = false;
         else document.getElementById("buyLifeButton").disabled = true;
         var alea = Math.round(Math.random() * 100)
