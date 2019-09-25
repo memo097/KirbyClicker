@@ -26,10 +26,10 @@ var rainbows = document.querySelector(".button-rainbow")
 var fireState = false;
 var waterState = false;
 var frostState = false;
-var rainbowState = false;
+var rainbowState = false
+
 
 bonus.disabled = true
-
 fires.disabled = true
 waters.disabled = true
 frosts.disabled = true
@@ -85,11 +85,10 @@ function frost() {
 function rainbow() {
     score = score - 1000
     numbers.textContent = score
-    multiplier = 30;
+    multiplier = multiplier +30;
     main.style.backgroundImage = 'url("images/background-final.gif")'
     cookie.style.boxShadow = '0 0 100px 50px rgb(200, 70, 200)'
-    rainbows.disabled = true
-    rainbowState = true
+    
 
 }
 function bonusclicker(){
@@ -175,7 +174,7 @@ function gameover(e) {
         else waters.disabled = false
         if (score < 500 || frostState) frosts.disabled = true
         else frosts.disabled = false
-        if (score < 1000) rainbows.disabled = true
+        if (score < 1000 ) rainbows.disabled = true
         else rainbows.disabled = false
         if (score < 5000 || actif) bonus.disabled = true
         else bonus.disabled = false
