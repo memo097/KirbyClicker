@@ -2,7 +2,7 @@ var clictime = 10;
 var autoactif = false;
 var actif = false;
 var timer = 30;
-var score = 0;
+var score = 0;        //score should be 0 for a start, increase to check functionalities
 var numbers = document.getElementById("numbers");
 var cookie = document.getElementById("bigCanvas");
 const canvasContainer = document.getElementById('canvas-container')
@@ -14,6 +14,12 @@ const main = document.querySelector(".main-container")
 var counter = 0
 const currentScore = document.getElementById('current-score')
 const bestScore = document.getElementById('best-score')
+const musicFire = document.getElementById("musicFire");
+const musicWater = document.getElementById("musicWater");
+const musicFrost = document.getElementById("musicFrost");
+const musicRainbow = document.getElementById("musicRainbow");
+var soundStop = true;
+
 
 if (window.localStorage.getItem('best')) bestScore.textContent = window.localStorage.getItem('best')
 
@@ -47,7 +53,7 @@ const motion = () => {
         cookie.style.animation = `yAxis${animation} 4000ms ease-in-out`
     }, 4000)
 }
-motion()
+motion()  //click this if you want kirby not to move
 
 function fire() {
 
@@ -58,6 +64,15 @@ function fire() {
     cookie.style.boxShadow = '0 0 100px 50px rgb(230, 30, 40)'
     fires.disabled = true
     fireState = true
+    soundStop=false; // stops musicStart
+    musicStart1.pause();
+    musicFire.play();
+    musicFire.volume = 0.7;       //sets lower volume
+    musicWater.pause();
+    musicFrost.pause();
+    musicRainbow.pause();
+
+   
 }
 function water() {
     score = score - 100
@@ -67,6 +82,13 @@ function water() {
     cookie.style.boxShadow = '0 0 100px 50px rgb(80, 50, 160)'
     waters.disabled = true
     waterState = true
+    soundStop=false; // stops musicStart
+    musicStart1.pause();
+    musicFire.pause();
+    musicWater.play();
+    musicWater.volume = 0.7;       //sets lower volume
+    musicFrost.pause();
+    musicRainbow.pause();
 }
 function frost() {
     score = score - 500
@@ -76,6 +98,13 @@ function frost() {
     cookie.style.boxShadow = '0 0 100px 50px rgb(100, 250, 230)'
     frosts.disabled = true
     frostState = true
+    soundStop=false; // stops musicStart
+    musicStart1.pause();
+    musicFire.pause();
+    musicWater.pause();
+    musicFrost.play();
+    musicFrost.volume = 0.7;       //sets lower volume
+    musicRainbow.pause();
 }
 function rainbow() {
     score = score - 1000
@@ -85,6 +114,13 @@ function rainbow() {
     cookie.style.boxShadow = '0 0 100px 50px rgb(200, 70, 200)'
     rainbows.disabled = true
     rainbowState = true
+    soundStop=false; // stops musicStart
+    musicStart1.pause();
+    musicFire.pause();
+    musicWater.pause();
+    musicFrost.pause();
+    musicRainbow.play();
+    musicRainbow.volume = 0.7;       //sets lower volume
 
 }
 function autoclicker(){
@@ -137,12 +173,33 @@ document.querySelector(".game-life").innerHTML = `x${life}`
 function gameover(e) {
     if (!e.path[0].id.includes('myCanvas')) {
         life--
+        document.querySelector(".game-life").innerHTML = `x${life}`
         if(life==0){
             document.querySelector(".game-over").style.animation="gameOver 700ms ease-in-out forwards"
             document.querySelector(".gif-retry").style.animation="gifRetry 3s ease-in forwards 700ms"
             document.querySelector(".gif-retry button").style.animation="buttonRetry 3s ease-in 700ms"
             document.querySelector(".main-container").onclick=(e)=false
-            musicStart1.pause(); //Pauses music at gameover
+            //Pauses music at gameover
+            musicStart1.pause();
+            musicFire.pause();
+            musicWater.pause();
+            musicFrost.pause();
+            musicRainbow.pause();
+            //music - game over
+            var gameOverMusic = document.getElementById("gameOverMusic");
+            var curtainFall = document.getElementById("end");
+            curtainFall.play();
+            setTimeout(() => {
+                curtainFall.play();
+            }, 600 )
+            setTimeout(() => {
+                gameOverMusic.play();
+                gameOverMusic.volume=0.5;
+            }, 1500 )
+
+
+            
+            //continuation of previous code
             if (parseInt(currentScore.textContent) > parseInt(bestScore.textContent)) {
                 window.localStorage.setItem('best', currentScore.textContent)
             }
@@ -150,7 +207,6 @@ function gameover(e) {
     } else {
         score = score + (1 * multiplier);
         numbers.textContent = score;
-       
        
         if (score < 30 || fireState) fires.disabled = true
         else fires.disabled = false
@@ -179,8 +235,9 @@ function gameover(e) {
         if (score >= 10) document.getElementById("buyLifeButton").disabled = false;
         else document.getElementById("buyLifeButton").disabled = true;
 
-    }
+    
     document.querySelector(".game-life").innerHTML = `x${life}`
+    }
 }
 function tryAgain() {
     document.location.reload()
@@ -191,6 +248,8 @@ function tryAgain() {
 
 function buyLife() {
         life++;
+        var pointGain=document.getElementById("pointGain");
+        pointGain.play(); //sound at point gain
         score = score - 10;
         numbers.textContent = score;
         document.querySelector(".game-life").innerHTML = `x${life}`
@@ -198,21 +257,23 @@ function buyLife() {
 }
 
 //MOUSIC
-//MUSIC starts on Click of Main Field
+//music START on Click of Main Field
 canvasContainer.onclick = () => musicStart()
 var musicStart1 = document.getElementById("musicStart");
-musicStart1.volume = 0.4;       //sets lower volume
+musicStart1.volume = 0.7;       //sets lower volume
 
 function musicStart() {
-    musicStart1.play();
-} 
+    if (soundStop==true) {
+        musicStart1.play()
+    }
+}
 
 //music - click Kirby
 bigCanvas.onclick = () => kirbyClick()
 var kirbyClick1 = document.getElementById("kirbyClick");
 
 function kirbyClick() {
-    kirbyClick1.play();
+    kirbyClick1.play ();
 }
 
 //music - click out of Kirby
@@ -223,28 +284,13 @@ function miss() {
     miss1.play();
 }  */
 
-/* fire.onclick = () => musicFire()
-var music2 = document.getElementById("musicFire");
-
-function musicFire() {
-    music2.play();
-}
-
-water.onclick = () => musicWater()
-var music3 = document.getElementById("musicWater");
-
-function musicWater() {
-    music3.play();
-} */
 
 
-
-
-
+ // CANVAS Kirby
 function canvas(){
 
- // Canvas Kirby
- 
+
+ //canvas body
  var c1 = document.getElementById("myCanvas1");
  var ctx = c1.getContext("2d");
 
