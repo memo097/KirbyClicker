@@ -240,6 +240,7 @@ body {
   bottom: 160px;
   right: 100px; 
   z-index: 4;
+  pointer-events: none
 }
 @keyframes falling{
 0%{
@@ -313,3 +314,18 @@ ul {
   justify-content: space-around;
   font-size: 18px !important;
 }
+#freelife{
+  width:50%;
+  opacity: 0;
+  position : absolute;
+  transform: translate(50%, -100%);
+  z-index: 4;
+  pointer-events: none
+}
+@keyframes fallinglife{
+  0% {bottom:10%;
+    opacity: 1;}
+  100% {bottom:70%;
+  opacity:0;}
+ 
+  }
