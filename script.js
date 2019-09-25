@@ -1,3 +1,4 @@
+var bonusclick = 0;
 var clictime = 10;
 var autoactif = false;
 var actif = false;
@@ -17,6 +18,9 @@ else bonus.disabled = false
 
 if (score < 200 ) document.getElementById("autoclick").disabled = true
 else document.getElementById("autoclick").disabled = false
+
+if (score < 5) document.getElementById("bonusclick").disabled = true
+else document.getElementById("bonusclick").disabled = false
 
 const motion = () => {
     const animations = [1, 2, 3, 4]
@@ -48,7 +52,19 @@ function rainbow () {
     main.style.backgroundImage = 'url("images/background-final.gif")'
     cookie.style.boxShadow = '0 0 100px 50px rgb(200, 70, 200)'
 }
+function bonusclicker(){
+    score = score - 5
+    numbers.textContent = score
+    bonusclick = bonusclick + 200
+    clictime *= 2
+    if (score < 5) document.getElementById("bonusclick").disabled = true
+    else document.getElementById("bonusclick").disabeld = false
+    if (bonusclick === 600) document.getElementById("bonusclick").disabled = true
+    else document.getElementById("bonusclick").disabled = false
+    console.log(bonusclick)
+}
 function autoclicker(){
+    let clictimeStore = clictime
     document.getElementById("autoclick").disabled = true
     autoactif = true
     score = score - 200
@@ -58,12 +74,12 @@ var durerclick = setInterval(function(){
     clictime--
     if(clictime==0){
     clearInterval(durerclick)
-    clictime=10
+    clictime= clictimeStore
     if(score < 200) document.getElementById("autoclick").disabled = true
     else document.getElementById("autoclick").disabled = false
     autoactif = false
     }
-},1000)
+},1000-bonusclick)
 }
 console.log(score, 1)
 bonus.addEventListener("click", function(){
@@ -107,6 +123,10 @@ function gameover(e){
         else bonus.disabled = false
         if(score < 200 || autoactif) document.getElementById("autoclick").disabled = true
         else document.getElementById("autoclick").disabled = false
+        if (score < 5 ) document.getElementById("bonusclick").disabled = true
+        else document.getElementById("bonusclick").disabled = false
+        if (bonusclick === 600) document.getElementById("bonusclick").disabled = true
+        else document.getElementById("bonusclick").disabled = false
 
         if(score>=10) document.getElementById("buyLifeButton").disabled = false;
         else document.getElementById("buyLifeButton").disabled = true;
