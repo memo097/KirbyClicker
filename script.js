@@ -140,7 +140,7 @@ function gameover(e) {
             document.querySelector(".gif-retry").style.animation = "gifRetry 3s ease-in forwards 700ms"
             document.querySelector(".gif-retry button").style.animation = "buttonRetry 3s ease-in 700ms"
             document.querySelector(".main-container").onclick = (e) = false
-            musicStart1.pause();
+            musicStart1.pause(); //Pauses music at gameover
 
         }
     } else {
