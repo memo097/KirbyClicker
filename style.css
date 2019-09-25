@@ -22,6 +22,9 @@ body {
   box-shadow: -2px 0 15px 5px rgba(10, 10, 10, 0.8);
   user-select: none;
   z-index: 1;
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
+  background-color: rgba(252, 142, 40, 0.884);
+  position: relative;
 }
 
 #canvas-container {
@@ -278,7 +281,7 @@ ul {
 .bonus-container li button{
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
   background-color: rgba(252, 142, 40, 0.884);
   color: white;
@@ -288,6 +291,16 @@ ul {
   font-size: 22px;
   font-weight: 500;
   border: none;
+  cursor: pointer;
+}
+
+#chrono {
+  display: flex;
+  justify-content: center;
+}
+
+.arrow {
+  transform: rotateY(180deg)
 }
 
 .bonus-container li button div {
@@ -295,8 +308,16 @@ ul {
   align-items: center;
 }
 
+.button-fire {
+  padding-left: 0;
+}
+
+.button-fire img{
+  height: 50px !important;
+}
+
 .bonus-container li img {
-  height: 50px;
+  height: 40px;
 }
 
 .price img {
@@ -311,9 +332,39 @@ ul {
   background-color: rgb(255, 20, 20);
   border-radius: 5px;
   height: 30px;
-  width: 60px;
+  width: 80px;
   justify-content: space-around;
   font-size: 18px !important;
+}
+
+.button-fire, .button-water, .button-frost, .button-rainbow {
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
+  background-color: rgba(45, 65, 105, 0.884) !important;
+}
+
+.bonus-container > img {
+  position: absolute;
+  bottom: 70px;
+  transform: translate(-50%);
+  left: 50%;
+  height: 200px;
+  opacity: 0.8;
+}
+
+.bonus-container > p {
+  position: absolute;
+  bottom: 80px;
+  transform: translate(-30%);
+  left: 50%;
+  color: white;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 50px;
+  font-weight: 700
+}
+
+.disabled {
+  cursor: default;
+  background-color: rgba(109, 142, 212, 0.884) !important;
 }
 #freelife{
   width:50%;

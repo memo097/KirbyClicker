@@ -9,7 +9,7 @@ var cookie = document.getElementById("bigCanvas");
 const canvasContainer = document.getElementById('canvas-container')
 var life = 10;
 var bonus = document.getElementById('chrono')
-bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
+bonus.innerHTML = "Score Pts. x2 (" + timer + " s)"
 var multiplier = 1;
 const main = document.querySelector(".main-container")
 var counter = 0
@@ -58,7 +58,7 @@ const motion = () => {
         cookie.style.animation = `yAxis${animation} 4000ms ease-in-out`
     }, 4000)
 }
-motion()  //click this if you want kirby not to move
+motion()
 
 function fire() {
 
@@ -69,6 +69,7 @@ function fire() {
     cookie.style.boxShadow = '0 0 100px 50px rgb(230, 30, 40)'
     fires.disabled = true
     fireState = true
+    fires.classList.add('disabled')
     soundStop=false; // stops musicStart
     musicStart1.pause();
     musicFire.play();
@@ -87,6 +88,8 @@ function water() {
     cookie.style.boxShadow = '0 0 100px 50px rgb(80, 50, 160)'
     waters.disabled = true
     waterState = true
+    fires.classList.add('disabled')
+    waters.classList.add('disabled')
     soundStop=false; // stops musicStart
     musicStart1.pause();
     musicFire.pause();
@@ -103,6 +106,9 @@ function frost() {
     cookie.style.boxShadow = '0 0 100px 50px rgb(100, 250, 230)'
     frosts.disabled = true
     frostState = true
+    fires.classList.add('disabled')
+    waters.classList.add('disabled')
+    frosts.classList.add('disabled')
     soundStop=false; // stops musicStart
     musicStart1.pause();
     musicFire.pause();
@@ -117,11 +123,12 @@ function rainbow() {
     multiplier = multiplier +30;
     main.style.backgroundImage = 'url("images/background-final.gif")'
     cookie.style.boxShadow = '0 0 100px 50px rgb(200, 70, 200)'
-<<<<<<< HEAD
-    
-=======
     rainbows.disabled = true
     rainbowState = true
+    fires.classList.add('disabled')
+    waters.classList.add('disabled')
+    frosts.classList.add('disabled')
+    rainbows.classList.add('disabled')
     soundStop=false; // stops musicStart
     musicStart1.pause();
     musicFire.pause();
@@ -129,8 +136,6 @@ function rainbow() {
     musicFrost.pause();
     musicRainbow.play();
     musicRainbow.volume = 0.7;       //sets lower volume
->>>>>>> 3316df1cfd4e76368b7b68a9ad10553e2fffd848
-
 }
 function bonusclicker(){
     score = score - 5
@@ -171,20 +176,20 @@ bonus.addEventListener("click", function () {
     multiplier = multiplier * 2
     var countdown = setInterval(function () {
         timer--
-        bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
+        bonus.innerHTML = "Score Pts. x2 (" + timer + " s)"
         clearInterval(countdown)
         if (score < 5000) bonus.disabled = true
         else bonus.disabled = false
         timer = 30
         actif = false
-        bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
+        bonus.innerHTML = "Score Pts. x2 (" + timer + " s)"
         if (timer == 0) {
-            bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
+            bonus.innerHTML = "Score Pts. x2 (" + timer + " s)"
             clearInterval(countdown)
             if (score < 5000) bonus.disabled = true
             else bonus.disabled = false
             timer = 10
-            bonus.innerHTML = "bonus mutiplicateur X2 " + timer + " Seconde"
+            bonus.innerHTML = "Score Pts. x2 (" + timer + " s)"
             multiplier = multiplier / 2
         }
     }, 1000)
@@ -231,15 +236,16 @@ function gameover(e) {
         score = score + (1 * multiplier); 
         numbers.textContent = score;
        
-        if (score < 30 || fireState) fires.disabled = true
-        else fires.disabled = false
-        if (score < 100 || waterState) waters.disabled = true
-        else waters.disabled = false
-        if (score < 500 || frostState) frosts.disabled = true
-        else frosts.disabled = false
-        if (score < 1000 ) rainbows.disabled = true
-        else rainbows.disabled = false
-        if (score < 5000 || actif) bonus.disabled = true
+       
+        if (score < 1 || fireState) {fires.disabled = true; fires.classList.add('disabled')}
+        else {fires.disabled = false; fires.classList.remove('disabled')}
+        if (score < 1 || waterState) {waters.disabled = true; waters.classList.add('disabled')}
+        else {waters.disabled = false; waters.classList.remove('disabled')}
+        if (score < 1 || frostState) {frosts.disabled = true; frosts.classList.add('disabled')}
+        else {frosts.disabled = false; frosts.classList.remove('disabled')}
+        if (score < 1 ) {rainbows.disabled = true; rainbows.classList.add('disabled')}
+        else {rainbows.disabled = false; rainbows.classList.remove('disabled')}
+        if (score < 1 || actif) bonus.disabled = true
         else bonus.disabled = false
         currentScore.textContent = parseInt(currentScore.textContent) + 1
         counter++
@@ -252,15 +258,15 @@ function gameover(e) {
 
         }, 100)
         
-        if (score < 200 || autoactif) document.getElementById("autoclick").disabled = true
+        if (score < 1 || autoactif) document.getElementById("autoclick").disabled = true
         else document.getElementById("autoclick").disabled = false
         if(parseInt(currentScore.textContent) > 250) document.getElementById("autoclick").disabled = true
-        if (score < 5 ) {document.getElementById("bonusclick").disabled = true; console.log(55)}
+        if (score < 1 ) {document.getElementById("bonusclick").disabled = true; console.log(55)}
         else document.getElementById("bonusclick").disabled = false
         if (bonusclick === 600) document.getElementById("bonusclick").disabled = true
         if(parseInt(currentScore.textContent) > 300) document.getElementById("bonusclick").disabled = true
         
-        if (score >= 10) document.getElementById("buyLifeButton").disabled = false;
+        if (score >= 1) document.getElementById("buyLifeButton").disabled = false;
         else document.getElementById("buyLifeButton").disabled = true;
         var alea = Math.round(Math.random() * 100)
         if(alea === 15 && heartKey == false) freelife()
