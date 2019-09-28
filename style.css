@@ -166,6 +166,7 @@ body {
   width: 100vw;
   bottom: 100%;
   z-index: 5;
+  user-select: none;
 }
 @keyframes gameOver{
   0% {bottom:100%}

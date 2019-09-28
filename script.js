@@ -341,7 +341,7 @@ function tryAgain() {
     blackWindow.style.animation = 'blackWindow 3s linear'
     setTimeout(() => {
         document.location.reload()
-    }, 3000)
+    }, 2800)
 }
 
 function freelife (){
