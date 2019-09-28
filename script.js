@@ -338,7 +338,7 @@ const handleHtml = () => {
 function tryAgain() {
     replay.play()
     playAgain.className = 'play-again-selected'
-    blackWindow.style.animation = 'blackWindow 3s linear'
+    blackWindow.style.animation = 'blackWindow 3s linear forwards'
     setTimeout(() => {
         document.location.reload()
     }, 3000)
