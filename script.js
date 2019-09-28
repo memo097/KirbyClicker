@@ -87,7 +87,6 @@ speaker.onclick = () => {
         musicFrost.volume = 0.3
         gameOverMusic.volume = 0.5
     }
-    console.log(speaker.src)
     setVolume()
 }
 
@@ -322,7 +321,7 @@ const handleHtml = () => {
     else {bonus.disabled = false; bonus.classList.remove('disabled-red')}
 
     if (score < 20 || autoactif) {document.getElementById("autoclick").disabled = true; document.getElementById("autoclick").classList.add('disabled-orange')}
-    else {document.getElementById("autoclick").disabled = false; document.getElementById("autoclick").classList.remove('disabled-orange'); console.log(document.getElementById("autoclick").className)}
+    else {document.getElementById("autoclick").disabled = false; document.getElementById("autoclick").classList.remove('disabled-orange')}
     if(parseInt(currentScore.textContent) > 250) document.getElementById("autoclick").disabled = true
     if (score < 10 ) {document.getElementById("bonusclick").disabled = true; document.getElementById("bonusclick").classList.add('disabled-orange')}
     else {document.getElementById("bonusclick").disabled = false; document.getElementById("bonusclick").classList.remove('disabled-orange')}

@@ -406,6 +406,7 @@ ul {
   left: 10px !important;
   bottom: 10px !important;
   height: 40px !important;
+  cursor: pointer;
 }
 
 .black-window {
