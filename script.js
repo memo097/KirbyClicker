@@ -322,7 +322,7 @@ const handleHtml = () => {
 
     if (score < 20 || autoactif) {document.getElementById("autoclick").disabled = true; document.getElementById("autoclick").classList.add('disabled-orange')}
     else {document.getElementById("autoclick").disabled = false; document.getElementById("autoclick").classList.remove('disabled-orange')}
-    if(parseInt(currentScore.textContent) > 250) document.getElementById("autoclick").disabled = true
+    if(parseInt(currentScore.textContent) > 1000) {document.getElementById("autoclick").disabled = true; document.getElementById("autoclick").classList.add('disabled-orange')}
     if (score < 10 ) {document.getElementById("bonusclick").disabled = true; document.getElementById("bonusclick").classList.add('disabled-orange')}
     else {document.getElementById("bonusclick").disabled = false; document.getElementById("bonusclick").classList.remove('disabled-orange')}
     if (bonusclick === 600) {document.getElementById("bonusclick").disabled = true; document.getElementById("bonusclick").classList.add('disabled-orange')}
