@@ -10,22 +10,25 @@
 </head>
 
 <body>
+    <div class='black-window'></div>
+
     <img class="game-over" src="images/game-over.jpg" alt="game over">
     <div class="gif-retry">
         <img src="images/game-over.gif" alt="gif game over">
-        <button onclick="tryAgain()">Play Again</button>
+        <button id="play-again" onclick="tryAgain()">Play Again</button>
     </div>
 
-    <audio src="./sound/02 - Title.mp3" id="musicStart" loop="loop" autoplay="autoplay"></audio>
+    <audio src="./sound/02 - Title.mp3" id="musicStart" loop="loop"></audio>
     <audio src="./sound/kirbyClick.wav" id="kirbyClick"></audio>
     <audio src="./sound/curtainFall.wav" id="end"></audio>
-    <audio src="./sound/Game_Over.mp3" id="gameOverMusic"></audio>
     <audio src="./sound/miss.wav" id="miss"></audio>
+    <audio src="./sound/replay.wav" id="replay"></audio>
+    <audio src="./sound/Game_Over.mp3" id="gameOverMusic"></audio>
     <audio src="./sound/pointGain.wav" id="pointGain"></audio>
-    <audio src="./sound/10 - Vegetable Valley _Intro_.mp3" id="musicFire" loop="loop" autoplay="autoplay"></audio>
-    <audio src="./sound/04 - Ice Cream Island Map Screen.mp3" id="musicWater" loop="loop" autoplay="autoplay"></audio>
-    <audio src="./sound/08- Dream Fountain Scene.mp3" id="musicFrost" loop="loop" autoplay="autoplay"></audio>
-    <audio src="./sound/06_floatislands.mp3" id="musicRainbow" loop="loop" autoplay="autoplay"></audio>
+    <audio src="./sound/10 - Vegetable Valley _Intro_.mp3" id="musicFire" loop="loop"></audio>
+    <audio src="./sound/04 - Ice Cream Island Map Screen.mp3" id="musicWater" loop="loop"></audio>
+    <audio src="./sound/08- Dream Fountain Scene.mp3" id="musicFrost" loop="loop"></audio>
+    <audio src="./sound/06_floatislands.mp3" id="musicRainbow" loop="loop"></audio>
 
 
 
@@ -64,53 +67,65 @@
     <section class="bonus-container">
         <ul>
             <li>
-                <button id="chrono"></button>
+                <button id="chrono" class="chrono disabled-red">
+                    <img src="images/star.png"><div id="chrono-text">Stars x2 (30 s)</div>
+                    <div class="price">50<img src="images/star.png"></div>
+                </button>
             </li>
             <li>
                 <button class="button-fire disabled" onclick="fire()">
                     <img src="images/flame.png"><div>BONUS x2</div>
-                    <div class="price">30<img src="images/star.png"></div>
+                    <div class="price">100<img src="images/star.png"></div>
                 </button>
             </li>
 
             <li>
                 <button class="button-water disabled" onclick="water()">
                     <img src="images/water-drop.png"><div>BONUS x5</div>
-                    <div class="price">100<img src="images/star.png"></div>
+                    <div class="price">300<img src="images/star.png"></div>
                 </button>
             </li>
 
             <li>
                 <button class="button-frost disabled" onclick="frost()">
                     <img src="images/snowflake.png"><div>BONUS x10</div>
-                    <div class="price">500<img src="images/star.png"></div>
+                    <div class="price">700<img src="images/star.png"></div>
                 </button>
             </li>
 
             <li>
                 <button class="button-rainbow disabled" onclick=rainbow()>
                     <img src="images/rainbow.png"><div>BONUS x30</div>
-                    <div class="price">1000<img src="images/star.png"></div>
+                    <div class="price">1500<img src="images/star.png"></div>
                 </button>
             </li>
 
             <li>
-                <button id="autoclick" onclick="autoclicker()"><img src="images/hammer.png">AutoClick<div class="price">200<img src="images/star.png"></div></button>
+                <button class="class disabled-orange" id="autoclick" onclick="autoclicker()"><img src="images/hammer.png">AutoClick<div class="price">20<img src="images/star.png"></div></button>
             </li>
             <li>
-                <button id="bonusclick" onclick="bonusclicker()"><img class="arrow" src="images/arrow-green.png">AutoClick lvl Up<div class="price">1000<img src="images/star.png"></div></button>
+                <button class="disabled-orange" id="bonusclick" onclick="bonusclicker()"><img class="arrow" src="images/arrow-green.png">AutoClick lvl Up<div class="price">10<img src="images/star.png"></div></button>
             </li>
 
             <li>
-                    <button id="buyLifeButton" onclick="buyLife()">
-                            <img src="images/hearth.gif_c200"><div>Life Pt. x1</div>
-                            <div class="price">1000<img src="images/star.png"></div>
-                    </button>
+                <button id="buyLifeButton" onclick="buyLife()" class="disabled-orange">
+                    <img src="images/hearth.gif_c200"><div>Life Pt. x1</div>
+                    <div class="price">100<img src="images/star.png"></div>
+                </button>
+            </li>
+
+            <li>
+                <button id="transfer" onclick="transfer()" class="disabled-orange">
+                    <img src="images/transfer.png"><div>Transfert</div>
+                    <div class="price">10.000<img src="images/star.png"></div>
+                </button>
             </li>
         </ul>
 
         <img src="images/kirby.png">
         <p>DIE ♥</p>
+
+        <img class="speaker" src="images/speaker.svg" alt="sound">
                 
             </section>
 

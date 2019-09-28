@@ -9,7 +9,6 @@ var cookie = document.getElementById("bigCanvas");
 const canvasContainer = document.getElementById('canvas-container')
 var life = 10;
 var bonus = document.getElementById('chrono')
-bonus.innerHTML = "Score Pts. x2 (" + timer + " s)"
 var multiplier = 1;
 const main = document.querySelector(".main-container")
 var counter = 0
@@ -19,9 +18,21 @@ const musicFire = document.getElementById("musicFire");
 const musicWater = document.getElementById("musicWater");
 const musicFrost = document.getElementById("musicFrost");
 const musicRainbow = document.getElementById("musicRainbow");
+const transferButton = document.getElementById('transfer')
+const chronoText = document.getElementById('chrono-text')
+const speaker = document.querySelector('.speaker')
+var kirbyClick1 = document.getElementById("kirbyClick");
+var musicStart1 = document.getElementById("musicStart");
+var pointGain=document.getElementById("pointGain");
+var gameOverMusic = document.getElementById("gameOverMusic");
+var curtainFall = document.getElementById("end");
+const miss = document.getElementById('miss')
+const replay = document.getElementById('replay')
+const blackWindow = document.getElementsByClassName('black-window')[0]
+const playAgain = document.getElementById('play-again')
 var soundStop = true;
-
 var heartKey = false
+let volumeLevel = 0.7
 
 if (window.localStorage.getItem('best')) bestScore.textContent = window.localStorage.getItem('best')
 
@@ -40,15 +51,45 @@ fires.disabled = true
 waters.disabled = true
 frosts.disabled = true
 rainbows.disabled = true
-
+transferButton.disabled = true
 
 document.getElementById("autoclick").disabled = true
-
 
 document.getElementById("buyLifeButton").disabled = true;
 
 if (score < 5) document.getElementById("bonusclick").disabled = true
 else document.getElementById("bonusclick").disabled = false
+
+musicFrost.volume = 0.3
+gameOverMusic.volume = 0.5
+const setVolume = () => {
+    musicFire.volume = volumeLevel
+    musicWater.volume = volumeLevel
+    musicRainbow.volume = volumeLevel
+    musicStart1.volume = volumeLevel
+    kirbyClick1.volume = volumeLevel
+    pointGain.volume = volumeLevel
+    curtainFall.volume = volumeLevel
+    miss.volume = volumeLevel
+    replay.volume = volumeLevel
+}
+setVolume()
+
+speaker.onclick = () => {
+    if (speaker.src.includes('speaker.svg')) {
+        speaker.src = speaker.src.replace('speaker.svg', 'speaker-off.png')
+        volumeLevel = 0
+        musicFrost.volume = 0
+        gameOverMusic.volume = 0
+    } else {
+        speaker.src = speaker.src.replace('speaker-off.png', 'speaker.svg')
+        volumeLevel = 0.7
+        musicFrost.volume = 0.3
+        gameOverMusic.volume = 0.5
+    }
+    console.log(speaker.src)
+    setVolume()
+}
 
 const motion = () => {
     const animations = [1, 2, 3, 4]
@@ -59,6 +100,15 @@ const motion = () => {
     }, 4000)
 }
 motion()
+
+const transfer = () => {
+    pointGain.play()
+    score -= 10000
+    currentScore.textContent = parseInt(currentScore.textContent) + 100
+    numbers.textContent = score
+    if (score < 10000) {transferButton.disabled = true; transferButton.classList.add('disabled-orange')}
+    handleHtml()
+}
 
 function fire() {
 
@@ -73,12 +123,10 @@ function fire() {
     soundStop=false; // stops musicStart
     musicStart1.pause();
     musicFire.play();
-    musicFire.volume = 0.7;       //sets lower volume
     musicWater.pause();
     musicFrost.pause();
     musicRainbow.pause();
-
-   
+    handleHtml()
 }
 function water() {
     score = score - 100
@@ -94,9 +142,9 @@ function water() {
     musicStart1.pause();
     musicFire.pause();
     musicWater.play();
-    musicWater.volume = 0.7;       //sets lower volume
     musicFrost.pause();
     musicRainbow.pause();
+    handleHtml()
 }
 function frost() {
     score = score - 500
@@ -114,8 +162,8 @@ function frost() {
     musicFire.pause();
     musicWater.pause();
     musicFrost.play();
-    musicFrost.volume = 0.7;       //sets lower volume
     musicRainbow.pause();
+    handleHtml()
 }
 function rainbow() {
     score = score - 1000
@@ -135,24 +183,25 @@ function rainbow() {
     musicWater.pause();
     musicFrost.pause();
     musicRainbow.play();
-    musicRainbow.volume = 0.7;       //sets lower volume
+    handleHtml()
 }
 function bonusclicker(){
+    pointGain.play()
     score = score - 5
     numbers.textContent = score
     bonusclick = bonusclick + 200
     clictime *= 2
-    if (bonusclick === 600) document.getElementById("bonusclick").disabled = true
-    else document.getElementById("bonusclick").disabled = false
-    if (score < 5) document.getElementById("bonusclick").disabled = true
-    else document.getElementById("bonusclick").disabeld = false
-    console.log(bonusclick)
+    if (score < 10 || bonusclick === 600) {document.getElementById("bonusclick").disabled = true; document.getElementById("bonusclick").classList.add('disabled-orange')}
+    else {document.getElementById("bonusclick").disabled = false; document.getElementById("bonusclick").classList.remove('disabled-orange')}
+    handleHtml()
 }
 function autoclicker(){
+    pointGain.play()
     let clictimeStore = clictime
     document.getElementById("autoclick").disabled = true
+    document.getElementById("autoclick").classList.add('disabled-orange')
     autoactif = true
-    score = score - 200
+    score = score - 20
     numbers.textContent = score
 var durerclick = setInterval(function(){
     myCanvas1.click()
@@ -160,39 +209,39 @@ var durerclick = setInterval(function(){
     if(clictime==0){
     clearInterval(durerclick)
     clictime= clictimeStore
-    if(score < 200) document.getElementById("autoclick").disabled = true
-    else document.getElementById("autoclick").disabled = false
-    if(parseInt(currentScore.textContent) > 250) document.getElementById("autoclick").disabled = true
+    if(score < 20) {document.getElementById("autoclick").disabled = true; document.getElementById("autoclick").classList.add('disabled-orange')}
+    else {document.getElementById("autoclick").disabled = false; document.getElementById("autoclick").classList.remove('disabled-orange')}
+    if(parseInt(currentScore.textContent) > 1000) document.getElementById("autoclick").disabled = true
     autoactif = false
     }
 },1000-bonusclick)
+    handleHtml()
 }
 
 bonus.addEventListener("click", function () {
     bonus.disabled = true
     actif = true
-    score = score - 5000
+    score = score - 50
     numbers.textContent = score
     multiplier = multiplier * 2
+    if (score < 50) {bonus.disabled = true; bonus.classList.add('disabled-red')}
+    else bonus.disabled = false
     var countdown = setInterval(function () {
         timer--
-        bonus.innerHTML = "Score Pts. x2 (" + timer + " s)"
-        clearInterval(countdown)
-        if (score < 5000) bonus.disabled = true
-        else bonus.disabled = false
-        timer = 30
-        actif = false
-        bonus.innerHTML = "Score Pts. x2 (" + timer + " s)"
+        chronoText.innerHTML = "Stars x2 (" + timer + " s)"
+        chronoText.innerHTML = "Stars x2 (" + timer + " s)"
         if (timer == 0) {
-            bonus.innerHTML = "Score Pts. x2 (" + timer + " s)"
+            actif = false
+            chronoText.innerHTML = "Stars x2 (" + timer + " s)"
             clearInterval(countdown)
-            if (score < 5000) bonus.disabled = true
-            else bonus.disabled = false
-            timer = 10
-            bonus.innerHTML = "Score Pts. x2 (" + timer + " s)"
+            if (score < 50) bonus.disabled = true
+            else {bonus.disabled = false; bonus.classList.remove('disabled-red')}
+            timer = 30
+            chronoText.innerHTML = "Stars x2 (" + timer + " s)"
             multiplier = multiplier / 2
         }
     }, 1000)
+    handleHtml()
 })
 
 main.onclick = (e) => gameover(e);
@@ -202,6 +251,7 @@ function gameover(e) {
     if (!e.path[0].id.includes('myCanvas')) {
         life--
         document.querySelector(".game-life").innerHTML = `x${life}`
+        miss.play()
         if(life==0){
             document.querySelector(".game-over").style.animation="gameOver 700ms ease-in-out forwards"
             document.querySelector(".gif-retry").style.animation="gifRetry 3s ease-in forwards 700ms"
@@ -213,16 +263,15 @@ function gameover(e) {
             musicWater.pause();
             musicFrost.pause();
             musicRainbow.pause();
+            kirbyClick1.volume = 0
+            soundStop = false
             //music - game over
-            var gameOverMusic = document.getElementById("gameOverMusic");
-            var curtainFall = document.getElementById("end");
-            curtainFall.play();
+            
             setTimeout(() => {
                 curtainFall.play();
-            }, 600 )
+            }, 200 )
             setTimeout(() => {
                 gameOverMusic.play();
-                gameOverMusic.volume=0.5;
             }, 1500 )
 
 
@@ -233,22 +282,10 @@ function gameover(e) {
             }
         }
     } else {
-        score = score + (1 * multiplier); 
-        numbers.textContent = score;
-       
-       
-        if (score < 1 || fireState) {fires.disabled = true; fires.classList.add('disabled')}
-        else {fires.disabled = false; fires.classList.remove('disabled')}
-        if (score < 1 || waterState) {waters.disabled = true; waters.classList.add('disabled')}
-        else {waters.disabled = false; waters.classList.remove('disabled')}
-        if (score < 1 || frostState) {frosts.disabled = true; frosts.classList.add('disabled')}
-        else {frosts.disabled = false; frosts.classList.remove('disabled')}
-        if (score < 1 ) {rainbows.disabled = true; rainbows.classList.add('disabled')}
-        else {rainbows.disabled = false; rainbows.classList.remove('disabled')}
-        if (score < 1 || actif) bonus.disabled = true
-        else bonus.disabled = false
+        score = score + (1 * multiplier);
         currentScore.textContent = parseInt(currentScore.textContent) + 1
         counter++
+        document.querySelector("#bigCanvas").innerHTML = document.querySelector("#bigCanvas").innerHTML + `<img class = "star" id="${counter}" src="images/star.png"></img>`
         document.querySelector("#bigCanvas").innerHTML = document.querySelector("#bigCanvas").innerHTML + `<img class = "star" id="${counter}" src="images/star.png"></img>`
         var random = Math.round(Math.random())
         setTimeout(function () {
@@ -257,27 +294,54 @@ function gameover(e) {
             document.getElementById(`${counter}`).remove
 
         }, 100)
-        
-        if (score < 1 || autoactif) document.getElementById("autoclick").disabled = true
-        else document.getElementById("autoclick").disabled = false
-        if(parseInt(currentScore.textContent) > 250) document.getElementById("autoclick").disabled = true
-        if (score < 1 ) {document.getElementById("bonusclick").disabled = true; console.log(55)}
-        else document.getElementById("bonusclick").disabled = false
-        if (bonusclick === 600) document.getElementById("bonusclick").disabled = true
-        if(parseInt(currentScore.textContent) > 300) document.getElementById("bonusclick").disabled = true
-        
-        if (score >=1) document.getElementById("buyLifeButton").disabled = false;
-        else document.getElementById("buyLifeButton").disabled = true;
+
         var alea = Math.round(Math.random() * 100)
         if(alea === 15 && heartKey == false) freelife()
-        console.log(heartKey)
-        canvas()
+
+        handleHtml()
     }
     document.querySelector(".game-life").innerHTML = `x${life}`
     }
 
+const handleHtml = () => {
+    numbers.textContent = score;
+
+    if (score < 10000) {transferButton.disabled = true; transferButton.classList.add('disabled-orange')}
+    else {transferButton.disabled = false; transferButton.classList.remove('disabled-orange')}
+
+    if (score < 100 || fireState || waterState || frostState || rainbowState) {fires.disabled = true; fires.classList.add('disabled')}
+    else {fires.disabled = false; fires.classList.remove('disabled')}
+    if (score < 300 || waterState || frostState || rainbowState) {waters.disabled = true; waters.classList.add('disabled')}
+    else {waters.disabled = false; waters.classList.remove('disabled')}
+    if (score < 700 || frostState || rainbowState) {frosts.disabled = true; frosts.classList.add('disabled')}
+    else {frosts.disabled = false; frosts.classList.remove('disabled')}
+    if (score < 1500 ) {rainbows.disabled = true; rainbows.classList.add('disabled')}
+    else {rainbows.disabled = false; rainbows.classList.remove('disabled')}
+
+    if (score < 50 || actif) {bonus.disabled = true; bonus.classList.add('disabled-red')}
+    else {bonus.disabled = false; bonus.classList.remove('disabled-red')}
+
+    if (score < 20 || autoactif) {document.getElementById("autoclick").disabled = true; document.getElementById("autoclick").classList.add('disabled-orange')}
+    else {document.getElementById("autoclick").disabled = false; document.getElementById("autoclick").classList.remove('disabled-orange'); console.log(document.getElementById("autoclick").className)}
+    if(parseInt(currentScore.textContent) > 250) document.getElementById("autoclick").disabled = true
+    if (score < 10 ) {document.getElementById("bonusclick").disabled = true; document.getElementById("bonusclick").classList.add('disabled-orange')}
+    else {document.getElementById("bonusclick").disabled = false; document.getElementById("bonusclick").classList.remove('disabled-orange')}
+    if (bonusclick === 600) {document.getElementById("bonusclick").disabled = true; document.getElementById("bonusclick").classList.add('disabled-orange')}
+    if(parseInt(currentScore.textContent) > 1000) {document.getElementById("bonusclick").disabled = true; document.getElementById("bonusclick").classList.add('disabled-orange')}
+    
+    if (score < 100) {document.getElementById("buyLifeButton").disabled = true; document.getElementById("buyLifeButton").classList.add('disabled-orange')}
+    else {document.getElementById("buyLifeButton").disabled = false; document.getElementById("buyLifeButton").classList.remove('disabled-orange')}
+
+    canvas()
+}
+
 function tryAgain() {
-    document.location.reload()
+    replay.play()
+    playAgain.className = 'play-again-selected'
+    blackWindow.style.animation = 'blackWindow 3s linear'
+    setTimeout(() => {
+        document.location.reload()
+    }, 3000)
 }
 
 function freelife (){
@@ -297,43 +361,30 @@ function freelife (){
 
 function buyLife() {
         life++;
-        var pointGain=document.getElementById("pointGain");
         pointGain.play(); //sound at point gain
-        score = score - 10;
+        score = score - 100;
         numbers.textContent = score;
         document.querySelector(".game-life").innerHTML = `x${life}`
-        if (score < 10) document.getElementById("buyLifeButton").disabled = true;
+        if (score < 100) {document.getElementById("buyLifeButton").disabled = true; document.getElementById("buyLifeButton").classList.add('disabled-orange')}
+        handleHtml()
 }
 
 //MOUSIC
 //music START on Click of Main Field
 canvasContainer.onclick = () => musicStart()
-var musicStart1 = document.getElementById("musicStart");
-musicStart1.volume = 0.7;       //sets lower volume
 
 function musicStart() {
-    if (soundStop==true) {
+    if (soundStop) {
         musicStart1.play()
     }
 }
 
 //music - click Kirby
 bigCanvas.onclick = () => kirbyClick()
-var kirbyClick1 = document.getElementById("kirbyClick");
 
 function kirbyClick() {
     kirbyClick1.play ();
 }
-
-//music - click out of Kirby
-/* main-container.onclick = () => miss()
-var miss1 = document.getElementById("miss");
-
-function miss() {
-    miss1.play();
-}  */
-
-
 
 function canvas() {
 
@@ -341,7 +392,6 @@ function canvas() {
 
     var c1 = document.getElementById("myCanvas1");
     var ctx = c1.getContext("2d");
-
 
     //body
     ctx.beginPath();
