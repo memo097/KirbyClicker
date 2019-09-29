@@ -111,7 +111,7 @@ const transfer = () => {
 
 function fire() {
 
-    score = score - 30
+    score = score - 100
     numbers.textContent = score
     multiplier = 2;
     main.style.backgroundImage = 'url("images/background-fire.jpg")'
@@ -128,7 +128,7 @@ function fire() {
     handleHtml()
 }
 function water() {
-    score = score - 100
+    score = score - 300
     numbers.textContent = score
     multiplier = 5;
     main.style.backgroundImage = 'url("images/background-water.jpg")'
@@ -146,7 +146,7 @@ function water() {
     handleHtml()
 }
 function frost() {
-    score = score - 500
+    score = score - 700
     numbers.textContent = score
     multiplier = 10;
     main.style.backgroundImage = 'url("images/background-ice.jpg")'
@@ -165,7 +165,7 @@ function frost() {
     handleHtml()
 }
 function rainbow() {
-    score = score - 1000
+    score = score - 1500
     numbers.textContent = score
     multiplier = multiplier +30;
     main.style.backgroundImage = 'url("images/background-final.gif")'
@@ -186,7 +186,7 @@ function rainbow() {
 }
 function bonusclicker(){
     pointGain.play()
-    score = score - 5
+    score = score - 10
     numbers.textContent = score
     bonusclick = bonusclick + 200
     clictime *= 2
@@ -281,17 +281,19 @@ function gameover(e) {
             }
         }
     } else {
+        if (document.getElementById(`${counter - 1}`)) {
+            document.getElementById(`${counter - 1}`).parentNode.removeChild(document.getElementById(`${counter - 1}`))
+        }
         score = score + (1 * multiplier);
         currentScore.textContent = parseInt(currentScore.textContent) + 1
         counter++
-        document.querySelector("#bigCanvas").innerHTML = document.querySelector("#bigCanvas").innerHTML + `<img class = "star" id="${counter}" src="images/star.png"></img>`
+        // document.querySelector("#bigCanvas").innerHTML = document.querySelector("#bigCanvas").innerHTML + `<img class = "star" id="${counter}" src="images/star.png"></img>`
         document.querySelector("#bigCanvas").innerHTML = document.querySelector("#bigCanvas").innerHTML + `<img class = "star" id="${counter}" src="images/star.png"></img>`
         var random = Math.round(Math.random())
         setTimeout(function () {
             
             document.getElementById(`${counter}`).style.animation = `${(random % 2 === 0 ? 'falling' : 'falling2')} 0.2s ease-in-out`;
-            document.getElementById(`${counter}`).remove
-
+            setTimeout(() => {document.getElementById(`${counter}`).parentNode.removeChild(document.getElementById(`${counter}`))}, 200)
         }, 100)
 
         var alea = Math.round(Math.random() * 100)
