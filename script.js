@@ -290,11 +290,12 @@ function gameover(e) {
         // document.querySelector("#bigCanvas").innerHTML = document.querySelector("#bigCanvas").innerHTML + `<img class = "star" id="${counter}" src="images/star.png"></img>`
         document.querySelector("#bigCanvas").innerHTML = document.querySelector("#bigCanvas").innerHTML + `<img class = "star" id="${counter}" src="images/star.png"></img>`
         var random = Math.round(Math.random())
-        setTimeout(function () {
+        if (document.getElementById(`${counter}`)) {
+            setTimeout(function () {
             
-            document.getElementById(`${counter}`).style.animation = `${(random % 2 === 0 ? 'falling' : 'falling2')} 0.2s ease-in-out`;
-            setTimeout(() => {document.getElementById(`${counter}`).parentNode.removeChild(document.getElementById(`${counter}`))}, 200)
-        }, 100)
+                document.getElementById(`${counter}`).style.animation = `${(random % 2 === 0 ? 'falling' : 'falling2')} 0.2s ease-in-out`;
+            }, 100)
+        }
 
         var alea = Math.round(Math.random() * 100)
         if(alea === 15 && heartKey == false) freelife()
